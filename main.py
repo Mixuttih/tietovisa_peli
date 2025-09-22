@@ -23,6 +23,13 @@ def highscore():
         print(f"Name: {rivi[0]}, Score: {rivi[1]}")
     return
 
+def scoreinsert(username, money):
+    mycursor = yhteys.cursor()
+    sql = f"INSERT INTO highscores (name, score) VALUES (%s, %s)"
+    val = (username, money)
+    mycursor.execute(sql, val)
+    yhteys.commit()
+
 #Peliprosessi
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
@@ -73,10 +80,12 @@ def game():
                 game_over = True
 
     #Palataan pois funktiosta
-    return
+    return username, money
 
-#Aloitetaan peli
-game()
+#Aloitetaan peli-funktio, joka palauttaa käyttäjänimen ja pisteet muuttujaan
+score = game()
+#Lisätään tiedot tietokantaan
+scoreinsert(score[0], score[1])
 
 #Kysytään haluaako pelaaja käynnistää pelin uudelleen
 print("GAME OVER!")
