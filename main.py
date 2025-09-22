@@ -10,6 +10,15 @@ yhteys = mysql.connector.connect(
     password='mikasana',
     autocommit=True
 )
+#High Score funktio
+def highscore():
+    sql = f"SELECT name, score FROM highscores ORDER BY score DESC LIMIT 10"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    tulos = kursori.fetchall()
+    for rivi in tulos:
+        print(f"Name: {rivi[0]}, Score: {rivi[1]}")
+    return
 
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
@@ -26,8 +35,13 @@ def game():
         print("Type [SCORES] to see the highscores.")
         valinta = input("[START]/[SCORES]: ").upper()
 
+        #Tulostetaan high score -taulu
+        while valinta == "SCORES":
+            highscore()
+            valinta = input("[START]/[SCORES]: ").upper()
+
         #Pelin käynnistys
-        if valinta == "START":
+        while valinta == "START":
             username = input('Enter your username: ')
 
             #Esimerkki-kysymys
