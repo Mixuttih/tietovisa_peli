@@ -10,6 +10,7 @@ yhteys = mysql.connector.connect(
     password='mikasana',
     autocommit=True
 )
+
 #High Score funktio
 def highscore():
     #Haetaan pelaajien nimet ja pisteet taulusta, järjestetään ne ja rajoitetaan vain 10 parhaaseen tulokseen
@@ -22,6 +23,7 @@ def highscore():
         print(f"Name: {rivi[0]}, Score: {rivi[1]}")
     return
 
+#Peliprosessi
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
     game_over = False
@@ -43,7 +45,7 @@ def game():
             valinta = input("[START]/[SCORES]: ").upper()
 
         #Pelin käynnistys
-        while valinta == "START":
+        if valinta == "START":
             username = input('Enter your username: ')
 
             #Esimerkki-kysymys
@@ -54,7 +56,7 @@ def game():
             print("D. This is incorrect")
 
             #Vastauskenttä
-            vastaus = input('Enter your answer: ')
+            vastaus = input('Enter your answer: ').upper()
             if vastaus == 'A':
                 print("This answer is correct!")
             elif vastaus == 'B':
@@ -66,6 +68,10 @@ def game():
             elif vastaus == 'D':
                 print("This answer is incorrect!")
                 game_over = True
+            else:
+                print("Invalid answer!")
+                game_over = True
+
     #Palataan pois funktiosta
     return
 
@@ -73,6 +79,7 @@ def game():
 game()
 
 #Kysytään haluaako pelaaja käynnistää pelin uudelleen
+print("GAME OVER!")
 restart = input('Do you want to try again? (y/n): ').upper()
 if restart == 'Y':
     game()
