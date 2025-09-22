@@ -10,16 +10,29 @@ yhteys = mysql.connector.connect(
     password='mikasana',
     autocommit=True
 )
-#High Score funktio
+
+#High Score -funktio
 def highscore():
+    #Haetaan pelaajien nimet ja pisteet taulusta, järjestetään ne ja rajoitetaan vain 10 parhaaseen tulokseen
     sql = f"SELECT name, score FROM highscores ORDER BY score DESC LIMIT 10"
     kursori = yhteys.cursor()
     kursori.execute(sql)
     tulos = kursori.fetchall()
+    #Printataan jokainen rivi
     for rivi in tulos:
         print(f"Name: {rivi[0]}, Score: {rivi[1]}")
     return
 
+#Score Insert -funktio
+def scoreinsert(username, money):
+    mycursor = yhteys.cursor()
+    #Lisätään pelaajan nimi ja pisteet highscores -tauluun
+    sql = f"INSERT INTO highscores (name, score) VALUES (%s, %s)"
+    val = (username, money)
+    mycursor.execute(sql, val)
+    yhteys.commit()
+
+#Peliprosessi
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
     game_over = False
@@ -41,7 +54,7 @@ def game():
             valinta = input("[START]/[SCORES]: ").upper()
 
         #Pelin käynnistys
-        while valinta == "START":
+        if valinta == "START":
             username = input('Enter your username: ')
 
             #Esimerkki-kysymys
@@ -52,7 +65,7 @@ def game():
             print("D. This is incorrect")
 
             #Vastauskenttä
-            vastaus = input('Enter your answer: ')
+            vastaus = input('Enter your answer: ').upper()
             if vastaus == 'A':
                 print("This answer is correct!")
             elif vastaus == 'B':
@@ -64,13 +77,20 @@ def game():
             elif vastaus == 'D':
                 print("This answer is incorrect!")
                 game_over = True
-    #Palataan pois funktiosta
-    return
+            else:
+                print("Invalid answer!")
+                game_over = True
 
-#Aloitetaan peli
-game()
+    #Palataan pois funktiosta
+    return username, money
+
+#Aloitetaan peli-funktio, joka palauttaa käyttäjänimen ja pisteet muuttujaan
+score = game()
+#Lisätään tiedot tietokantaan
+scoreinsert(score[0], score[1])
 
 #Kysytään haluaako pelaaja käynnistää pelin uudelleen
+print("GAME OVER!")
 restart = input('Do you want to try again? (y/n): ').upper()
 if restart == 'Y':
     game()
