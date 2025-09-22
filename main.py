@@ -1,5 +1,6 @@
 import random
 import mysql.connector
+import tarina
 
 #SQL yhteys
 yhteys = mysql.connector.connect(
@@ -43,7 +44,8 @@ def game():
 
     while game_over == False:
         #Alkuteksti
-        print("Welcome to 'Whomst would liketh to be a Big Money Person?'!")
+        for line in tarina.getStory():
+            print(line)
         print("Type [START] to start the game.")
         print("Type [SCORES] to see the highscores.")
         valinta = input("[START]/[SCORES]: ").upper()
@@ -68,6 +70,7 @@ def game():
             vastaus = input('Enter your answer: ').upper()
             if vastaus == 'A':
                 print("This answer is correct!")
+                break
             elif vastaus == 'B':
                 print("This answer is incorrect!")
                 game_over = True
