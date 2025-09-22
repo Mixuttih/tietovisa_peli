@@ -12,6 +12,7 @@ yhteys = mysql.connector.connect(
     autocommit=True
 )
 
+
 #High Score -funktio
 def highscore():
     #Haetaan pelaajien nimet ja pisteet taulusta, järjestetään ne ja rajoitetaan vain 10 parhaaseen tulokseen
