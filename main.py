@@ -12,10 +12,12 @@ yhteys = mysql.connector.connect(
 )
 #High Score funktio
 def highscore():
+    #Haetaan pelaajien nimet ja pisteet taulusta, järjestetään ne ja rajoitetaan vain 10 parhaaseen tulokseen
     sql = f"SELECT name, score FROM highscores ORDER BY score DESC LIMIT 10"
     kursori = yhteys.cursor()
     kursori.execute(sql)
     tulos = kursori.fetchall()
+    #Printataan jokainen rivi
     for rivi in tulos:
         print(f"Name: {rivi[0]}, Score: {rivi[1]}")
     return
