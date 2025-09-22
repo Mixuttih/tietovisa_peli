@@ -11,7 +11,7 @@ yhteys = mysql.connector.connect(
     autocommit=True
 )
 
-#High Score funktio
+#High Score -funktio
 def highscore():
     #Haetaan pelaajien nimet ja pisteet taulusta, järjestetään ne ja rajoitetaan vain 10 parhaaseen tulokseen
     sql = f"SELECT name, score FROM highscores ORDER BY score DESC LIMIT 10"
@@ -23,8 +23,10 @@ def highscore():
         print(f"Name: {rivi[0]}, Score: {rivi[1]}")
     return
 
+#Score Insert -funktio
 def scoreinsert(username, money):
     mycursor = yhteys.cursor()
+    #Lisätään pelaajan nimi ja pisteet highscores -tauluun
     sql = f"INSERT INTO highscores (name, score) VALUES (%s, %s)"
     val = (username, money)
     mycursor.execute(sql, val)
