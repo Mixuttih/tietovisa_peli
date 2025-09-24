@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2623488d-6555-4241-ad9f-50e950c3fc0f" name="Changes" comment="jatkettu kysymysfunktiota">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="2623488d-6555-4241-ad9f-50e950c3fc0f" name="Changes" comment="kommentteja lisätty" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -167,7 +164,21 @@
       <option name="presentableId" value="LOCAL−00010" />
       <updated>1758703807360</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL−00011" summary="kysymysfunktion palautus nyt toimiva">
+      <option name="closed" value="true" />
+      <created>1758704849791</created>
+      <option name="number" value="LOCAL−00011" />
+      <option name="presentableId" value="LOCAL−00011" />
+      <updated>1758704849791</updated>
+    </task>
+    <task id="LOCAL−00012" summary="kommentteja lisätty">
+      <option name="closed" value="true" />
+      <created>1758705112170</created>
+      <option name="number" value="LOCAL−00012" />
+      <option name="presentableId" value="LOCAL−00012" />
+      <updated>1758705112170</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,9 +203,11 @@
     <MESSAGE value="Lisätty scoreinsert -funktio joka lisää pelaajan nimen ja pisteet tietokantaan pelin jälkeen" />
     <MESSAGE value="Kommentteja lisätty" />
     <MESSAGE value="jatkettu kysymysfunktiota" />
-    <option name="LAST_COMMIT_MESSAGE" value="jatkettu kysymysfunktiota" />
+    <MESSAGE value="kysymysfunktion palautus nyt toimiva" />
+    <MESSAGE value="kommentteja lisätty" />
+    <option name="LAST_COMMIT_MESSAGE" value="kommentteja lisätty" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tietovisa_peli$main.coverage" NAME="main Coverage Results" MODIFIED="1758703718759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tietovisa_peli$main.coverage" NAME="main Coverage Results" MODIFIED="1758704686588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
