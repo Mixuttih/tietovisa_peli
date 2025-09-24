@@ -1,4 +1,10 @@
-# Whitch country is airport x located?
+# Which country is airport x located?
+# Haetaan lentokentän nimi
+sql = f"SELECT name, ident FROM airport ORDER BY RAND() LIMIT 1"
+# Haetaan oikean maan nimi
+sql = f"SELECT name, iso_country FROM country WHERE iso_country in(SELECT iso_country FROM airport WHERE ident = '{tulos[1]}')"
+# Haetaan väärien maiden nimet
+sql = f"SELECT name FROM country WHERE NOT iso_country = '{oikea_vastaus[1]}' ORDER BY RAND() LIMIT 3"
 
 # How high is x airport?
 
