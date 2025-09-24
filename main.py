@@ -94,7 +94,7 @@ def game():
                 vastaus = input('Enter your answer: ').upper()
                 if vastaus == kysymys_sanakirja["vastaus1"][0]:
                     print("This answer is correct!")
-
+                    current_round += 1
                 elif vastaus == kysymys_sanakirja["vastaus2"][0]:
                     print("This answer is incorrect!")
                     break
