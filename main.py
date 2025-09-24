@@ -16,10 +16,19 @@ yhteys = mysql.connector.connect(
 def kysymys(i):
     if i < 6:
         #Luodaan helppokysymys
+        return {
+            "vastaus1": ["A","vastausteksti","oikein"],
+            "vastaus2": ["B","vastausteksti","väärin"],
+            "vastaus3": ["C","vastausteksti","väärin"],
+            "vastaus4": ["D","vastausteksti","väärin"],
+            "kysymys": "kysymys"
+        }
     elif i < 11:
         #Luodaan keskivaikea kysymys
+        return
     elif i < 16:
         #Luodaan vaikea kysymys
+        return
     else:
         #Voittaja
         return
@@ -74,19 +83,24 @@ def game():
             #Haetaan kysymys-sanakirja
             current_round = 1
             kysymys_sanakirja = kysymys(current_round)
+            print(kysymys_sanakirja["kysymys"])
+            print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
+            print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
+            print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
+            print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
 
             #Vastauskenttä
             vastaus = input('Enter your answer: ').upper()
-            if vastaus == 'A':
+            if vastaus == kysymys_sanakirja["vastaus1"][0]:
                 print("This answer is correct!")
                 break
-            elif vastaus == 'B':
+            elif vastaus == kysymys_sanakirja["vastaus2"][0]:
                 print("This answer is incorrect!")
                 game_over = True
-            elif vastaus == 'C':
+            elif vastaus == kysymys_sanakirja["vastaus3"][0]:
                 print("This answer is incorrect!")
                 game_over = True
-            elif vastaus == 'D':
+            elif vastaus == kysymys_sanakirja["vastaus4"][0]:
                 print("This answer is incorrect!")
                 game_over = True
             else:
