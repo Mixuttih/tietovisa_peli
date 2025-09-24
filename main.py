@@ -14,25 +14,25 @@ yhteys = mysql.connector.connect(
 
 #Kysymys -funktio
 def kysymys(i):
+    # Sanakirja, johon vastaukset talletetaan
+    vastauslista = {}
+
+    # Lista joka asettaa oikeat ja väärät vastaukset satunnaiseen järjestykseen
+    random_lista = ["1", "2", "3", "4"]
+    random.shuffle(random_lista)
+
     if i < 6:
         #Luodaan helppokysymys
-        #Sanakirja, johon vastaukset talletetaan
-        vastauslista = {}
-
-        #Lista joka asettaa oikeat ja väärät vastaukset satunnaiseen järjestykseen
-        random_lista = ["1", "2", "3", "4"]
-        random.shuffle(random_lista)
 
         #Haetaan kysymykseen muuttuja
         sql = f"SELECT name, ident FROM airport ORDER BY RAND() LIMIT 1"
         kursori = yhteys.cursor()
         kursori.execute(sql)
-        tulos = kursori.fetchone()
         #Haun tulos muuttujaan
-        kysymys = tulos[0]
+        kysymys = kursori.fetchone()
 
         #Haetaan kysymykseen vastaus
-        sql = f"SELECT name, iso_country FROM country WHERE iso_country in(SELECT iso_country FROM airport WHERE ident = '{tulos[1]}')"
+        sql = f"SELECT name, iso_country FROM country WHERE iso_country in(SELECT iso_country FROM airport WHERE ident = '{kysymys[1]}')"
         kursori = yhteys.cursor()
         kursori.execute(sql)
         #Oikea vastaus muuttujaan
@@ -50,24 +50,77 @@ def kysymys(i):
         vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
         vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
         vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
-
-        #Palautetaan funktiosta sanakirja, joka sisältää kysymyksen, vastaukset ja tiedon onko vastaus oikein vai väärin
-        return {
-            "vastaus1": ["A",vastauslista["vastaus1"][0],vastauslista["vastaus1"][1]],
-            "vastaus2": ["B",vastauslista["vastaus2"][0],vastauslista["vastaus2"][1]],
-            "vastaus3": ["C",vastauslista["vastaus3"][0],vastauslista["vastaus3"][1]],
-            "vastaus4": ["D",vastauslista["vastaus4"][0],vastauslista["vastaus4"][1]],
-            "kysymys": kysymys
-        }
     elif i < 11:
         #Luodaan keskivaikea kysymys
-        return
+
+        # Haetaan kysymykseen muuttuja
+        sql = f"SELECT name, ident FROM airport ORDER BY RAND() LIMIT 1"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        # Haun tulos muuttujaan
+        kysymys = kursori.fetchone()
+
+        # Haetaan kysymykseen vastaus
+        sql = f"SELECT ident FROM airport WHERE ident = '{kysymys[1]}'"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        # Oikea vastaus muuttujaan
+        oikea_vastaus = kursori.fetchone()
+
+        # Haetaan 3 väärää vastausta
+        sql = f"SELECT ident FROM airport WHERE NOT ident = '{oikea_vastaus[0]}' ORDER BY RAND() LIMIT 3"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        # Väärät vastaukset muuttujaan
+        vaarat_vastaukset = kursori.fetchall()
+
+        # Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
+        vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
+        vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
+        vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
+        vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
+
     elif i < 16:
         #Luodaan vaikea kysymys
-        return
+
+        # Haetaan kysymykseen muuttuja
+        sql = f"SELECT ident FROM airport ORDER BY RAND() LIMIT 1"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        # Haun tulos muuttujaan
+        kysymys = kursori.fetchone()
+
+        # Haetaan kysymykseen vastaus
+        sql = f"SELECT name FROM airport WHERE ident = '{kysymys[0]}'"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        # Oikea vastaus muuttujaan
+        oikea_vastaus = kursori.fetchone()
+
+        # Haetaan 3 väärää vastausta
+        sql = f"SELECT name FROM airport WHERE NOT ident = '{kysymys[0]}' ORDER BY RAND() LIMIT 3"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        # Väärät vastaukset muuttujaan
+        vaarat_vastaukset = kursori.fetchall()
+
+        # Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
+        vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
+        vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
+        vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
+        vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
     else:
         #Voittaja
-        return
+        return "winner"
+
+    # Palautetaan funktiosta sanakirja, joka sisältää kysymyksen, vastaukset ja tiedon onko vastaus oikein vai väärin
+    return {
+        "vastaus1": ["A", vastauslista["vastaus1"][0], vastauslista["vastaus1"][1]],
+        "vastaus2": ["B", vastauslista["vastaus2"][0], vastauslista["vastaus2"][1]],
+        "vastaus3": ["C", vastauslista["vastaus3"][0], vastauslista["vastaus3"][1]],
+        "vastaus4": ["D", vastauslista["vastaus4"][0], vastauslista["vastaus4"][1]],
+        "kysymys": kysymys[0]
+    }
 
 #High Score -funktio
 def highscore():
@@ -118,46 +171,51 @@ def game():
 
             #Haetaan kysymys-sanakirja
             current_round = 1
-            while current_round < 16:
+            while current_round < 17:
                 kysymys_sanakirja = kysymys(current_round)
-                print(kysymys_sanakirja["kysymys"])
-                print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
-                print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
-                print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
-                print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
-                #Vastauskenttä
-                vastaus = input('Enter your answer: ').upper()
-                if vastaus == kysymys_sanakirja["vastaus1"][0]:
-                    if kysymys_sanakirja["vastaus1"][2] == 1:
-                        print("This answer is correct!")
-                        current_round += 1
-                    else:
-                        print("This answer is incorrect!")
-                        break
-                elif vastaus == kysymys_sanakirja["vastaus2"][0]:
-                    if kysymys_sanakirja["vastaus2"][2] == 1:
-                        print("This answer is correct!")
-                        current_round += 1
-                    else:
-                        print("This answer is incorrect!")
-                        break
-                elif vastaus == kysymys_sanakirja["vastaus3"][0]:
-                    if kysymys_sanakirja["vastaus3"][2] == 1:
-                        print("This answer is correct!")
-                        current_round += 1
-                    else:
-                        print("This answer is incorrect!")
-                        break
-                elif vastaus == kysymys_sanakirja["vastaus4"][0]:
-                    if kysymys_sanakirja["vastaus4"][2] == 1:
-                        print("This answer is correct!")
-                        current_round += 1
-                    else:
-                        print("This answer is incorrect!")
-                        break
-                else:
-                    print("Invalid answer!")
+                if kysymys_sanakirja == "winner":
+                    print("You won!")
                     break
+                else:
+                    print(kysymys_sanakirja)
+                    print(kysymys_sanakirja["kysymys"])
+                    print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
+                    print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
+                    print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
+                    print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+                    #Vastauskenttä
+                    vastaus = input('Enter your answer: ').upper()
+                    if vastaus == kysymys_sanakirja["vastaus1"][0]:
+                        if kysymys_sanakirja["vastaus1"][2] == 1:
+                            print("This answer is correct!")
+                            current_round += 1
+                        else:
+                            print("This answer is incorrect!")
+                            break
+                    elif vastaus == kysymys_sanakirja["vastaus2"][0]:
+                        if kysymys_sanakirja["vastaus2"][2] == 1:
+                            print("This answer is correct!")
+                            current_round += 1
+                        else:
+                            print("This answer is incorrect!")
+                            break
+                    elif vastaus == kysymys_sanakirja["vastaus3"][0]:
+                        if kysymys_sanakirja["vastaus3"][2] == 1:
+                            print("This answer is correct!")
+                            current_round += 1
+                        else:
+                            print("This answer is incorrect!")
+                            break
+                    elif vastaus == kysymys_sanakirja["vastaus4"][0]:
+                        if kysymys_sanakirja["vastaus4"][2] == 1:
+                            print("This answer is correct!")
+                            current_round += 1
+                        else:
+                            print("This answer is incorrect!")
+                            break
+                    else:
+                        print("Invalid answer!")
+                        break
             break
         game_over = True
 
