@@ -82,30 +82,33 @@ def game():
 
             #Haetaan kysymys-sanakirja
             current_round = 1
-            kysymys_sanakirja = kysymys(current_round)
-            print(kysymys_sanakirja["kysymys"])
-            print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
-            print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
-            print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
-            print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+            while current_round < 16:
+                kysymys_sanakirja = kysymys(current_round)
+                print(kysymys_sanakirja["kysymys"])
+                print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
+                print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
+                print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
+                print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
 
-            #Vastauskenttä
-            vastaus = input('Enter your answer: ').upper()
-            if vastaus == kysymys_sanakirja["vastaus1"][0]:
-                print("This answer is correct!")
-                break
-            elif vastaus == kysymys_sanakirja["vastaus2"][0]:
-                print("This answer is incorrect!")
-                game_over = True
-            elif vastaus == kysymys_sanakirja["vastaus3"][0]:
-                print("This answer is incorrect!")
-                game_over = True
-            elif vastaus == kysymys_sanakirja["vastaus4"][0]:
-                print("This answer is incorrect!")
-                game_over = True
-            else:
-                print("Invalid answer!")
-                game_over = True
+                #Vastauskenttä
+                vastaus = input('Enter your answer: ').upper()
+                if vastaus == kysymys_sanakirja["vastaus1"][0]:
+                    print("This answer is correct!")
+                    current_round += 1
+                elif vastaus == kysymys_sanakirja["vastaus2"][0]:
+                    print("This answer is incorrect!")
+                    break
+                elif vastaus == kysymys_sanakirja["vastaus3"][0]:
+                    print("This answer is incorrect!")
+                    break
+                elif vastaus == kysymys_sanakirja["vastaus4"][0]:
+                    print("This answer is incorrect!")
+                    break
+                else:
+                    print("Invalid answer!")
+                    break
+            break
+        game_over = True
 
     #Palataan pois funktiosta
     return username, money
