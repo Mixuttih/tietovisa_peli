@@ -13,7 +13,7 @@ yhteys = mysql.connector.connect(
 )
 
 #Kysymys -funktio
-def kysymys(i):
+def kysymysfunktio(i):
     # Sanakirja, johon vastaukset talletetaan
     vastauslista = {}
 
@@ -172,7 +172,7 @@ def game():
             #Haetaan kysymys-sanakirja
             current_round = 1
             while current_round < 17:
-                kysymys_sanakirja = kysymys(current_round)
+                kysymys_sanakirja = kysymysfunktio(current_round)
                 if kysymys_sanakirja == "winner":
                     print("You won!")
                     break
