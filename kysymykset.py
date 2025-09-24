@@ -6,6 +6,7 @@
     # Haetaan väärien maiden nimet
     sql3 = f"SELECT name FROM country WHERE NOT iso_country = '{oikea_vastaus[1]}' ORDER BY RAND() LIMIT 3"
 
+
 # How high is x airport?
 
 # What is a distance between x and x airport?
