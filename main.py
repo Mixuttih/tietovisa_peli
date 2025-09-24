@@ -5,10 +5,10 @@ import tarina
 #SQL yhteys
 yhteys = mysql.connector.connect(
     host='localhost',
-    port=3306,
+    port=3307,
     database='flight_game',
     user='root',
-    password='Sorsalampi2025',
+    password='mikasana',
     autocommit=True
 )
 
@@ -16,12 +16,35 @@ yhteys = mysql.connector.connect(
 def kysymys(i):
     if i < 6:
         #Luodaan helppokysymys
+        vastauslista = {}
+        sql = f"SELECT name, ident FROM airport ORDER BY RAND() LIMIT 1"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        tulos = kursori.fetchone()
+        kysymys = tulos[0]
+
+        sql = f"SELECT name, iso_country FROM country WHERE iso_country in(SELECT iso_country FROM airport WHERE ident = '{tulos[1]}')"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        oikea_vastaus = kursori.fetchone()
+        vastauslista["vastaus1"] = oikea_vastaus[0], 1
+
+
+        sql = f"SELECT name FROM country WHERE NOT iso_country = '{oikea_vastaus[1]}' ORDER BY RAND() LIMIT 3"
+        kursori = yhteys.cursor()
+        kursori.execute(sql)
+        vaarat_vastaukset = kursori.fetchall()
+        vastauslista["vastaus2"] = vaarat_vastaukset[0][0], 0
+        vastauslista["vastaus3"] = vaarat_vastaukset[1][0], 0
+        vastauslista["vastaus4"] = vaarat_vastaukset[2][0], 0
+        print(vaarat_vastaukset)
+        print(vastauslista)
         return {
-            "vastaus1": ["A","vastausteksti","oikein"],
-            "vastaus2": ["B","vastausteksti","väärin"],
-            "vastaus3": ["C","vastausteksti","väärin"],
-            "vastaus4": ["D","vastausteksti","väärin"],
-            "kysymys": "kysymys"
+            "vastaus1": ["A",vastauslista["vastaus1"][0],vastauslista["vastaus1"][1]],
+            "vastaus2": ["B",vastauslista["vastaus2"][0],vastauslista["vastaus2"][1]],
+            "vastaus3": ["C",vastauslista["vastaus3"][0],vastauslista["vastaus3"][1]],
+            "vastaus4": ["D",vastauslista["vastaus4"][0],vastauslista["vastaus4"][1]],
+            "kysymys": kysymys
         }
     elif i < 11:
         #Luodaan keskivaikea kysymys
@@ -89,21 +112,37 @@ def game():
                 print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
                 print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
                 print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
-
+                print(kysymys_sanakirja)
                 #Vastauskenttä
                 vastaus = input('Enter your answer: ').upper()
                 if vastaus == kysymys_sanakirja["vastaus1"][0]:
-                    print("This answer is correct!")
-                    current_round += 1
+                    if kysymys_sanakirja["vastaus1"][2] == 1:
+                        print("This answer is correct!")
+                        current_round += 1
+                    else:
+                        print("This answer is incorrect!")
+                        break
                 elif vastaus == kysymys_sanakirja["vastaus2"][0]:
-                    print("This answer is incorrect!")
-                    break
+                    if kysymys_sanakirja["vastaus2"][2] == 1:
+                        print("This answer is correct!")
+                        current_round += 1
+                    else:
+                        print("This answer is incorrect!")
+                        break
                 elif vastaus == kysymys_sanakirja["vastaus3"][0]:
-                    print("This answer is incorrect!")
-                    break
+                    if kysymys_sanakirja["vastaus3"][2] == 1:
+                        print("This answer is correct!")
+                        current_round += 1
+                    else:
+                        print("This answer is incorrect!")
+                        break
                 elif vastaus == kysymys_sanakirja["vastaus4"][0]:
-                    print("This answer is incorrect!")
-                    break
+                    if kysymys_sanakirja["vastaus4"][2] == 1:
+                        print("This answer is correct!")
+                        current_round += 1
+                    else:
+                        print("This answer is incorrect!")
+                        break
                 else:
                     print("Invalid answer!")
                     break
