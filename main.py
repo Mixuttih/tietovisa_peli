@@ -16,31 +16,42 @@ yhteys = mysql.connector.connect(
 def kysymys(i):
     if i < 6:
         #Luodaan helppokysymys
+        #Sanakirja, johon vastaukset talletetaan
         vastauslista = {}
 
+        #Lista joka asettaa oikeat ja väärät vastaukset satunnaiseen järjestykseen
+        random_lista = ["1", "2", "3", "4"]
+        random.shuffle(random_lista)
+
+        #Haetaan kysymykseen muuttuja
         sql = f"SELECT name, ident FROM airport ORDER BY RAND() LIMIT 1"
         kursori = yhteys.cursor()
         kursori.execute(sql)
         tulos = kursori.fetchone()
+        #Haun tulos muuttujaan
         kysymys = tulos[0]
 
+        #Haetaan kysymykseen vastaus
         sql = f"SELECT name, iso_country FROM country WHERE iso_country in(SELECT iso_country FROM airport WHERE ident = '{tulos[1]}')"
         kursori = yhteys.cursor()
         kursori.execute(sql)
+        #Oikea vastaus muuttujaan
         oikea_vastaus = kursori.fetchone()
 
+        #Haetaan 3 väärää vastausta
         sql = f"SELECT name FROM country WHERE NOT iso_country = '{oikea_vastaus[1]}' ORDER BY RAND() LIMIT 3"
         kursori = yhteys.cursor()
         kursori.execute(sql)
+        #Väärät vastaukset muuttujaan
         vaarat_vastaukset = kursori.fetchall()
 
-        random_lista = ["1", "2", "3", "4"]
-        random.shuffle(random_lista)
-
+        #Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
         vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
         vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
         vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
         vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
+
+        #Palautetaan funktiosta sanakirja, joka sisältää kysymyksen, vastaukset ja tiedon onko vastaus oikein vai väärin
         return {
             "vastaus1": ["A",vastauslista["vastaus1"][0],vastauslista["vastaus1"][1]],
             "vastaus2": ["B",vastauslista["vastaus2"][0],vastauslista["vastaus2"][1]],
