@@ -17,6 +17,7 @@ def kysymys(i):
     if i < 6:
         #Luodaan helppokysymys
         vastauslista = {}
+
         sql = f"SELECT name, ident FROM airport ORDER BY RAND() LIMIT 1"
         kursori = yhteys.cursor()
         kursori.execute(sql)
@@ -27,18 +28,19 @@ def kysymys(i):
         kursori = yhteys.cursor()
         kursori.execute(sql)
         oikea_vastaus = kursori.fetchone()
-        vastauslista["vastaus1"] = oikea_vastaus[0], 1
-
 
         sql = f"SELECT name FROM country WHERE NOT iso_country = '{oikea_vastaus[1]}' ORDER BY RAND() LIMIT 3"
         kursori = yhteys.cursor()
         kursori.execute(sql)
         vaarat_vastaukset = kursori.fetchall()
-        vastauslista["vastaus2"] = vaarat_vastaukset[0][0], 0
-        vastauslista["vastaus3"] = vaarat_vastaukset[1][0], 0
-        vastauslista["vastaus4"] = vaarat_vastaukset[2][0], 0
-        print(vaarat_vastaukset)
-        print(vastauslista)
+
+        random_lista = ["1", "2", "3", "4"]
+        random.shuffle(random_lista)
+
+        vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
+        vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
+        vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
+        vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
         return {
             "vastaus1": ["A",vastauslista["vastaus1"][0],vastauslista["vastaus1"][1]],
             "vastaus2": ["B",vastauslista["vastaus2"][0],vastauslista["vastaus2"][1]],
@@ -112,7 +114,6 @@ def game():
                 print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
                 print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
                 print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
-                print(kysymys_sanakirja)
                 #Vastauskenttä
                 vastaus = input('Enter your answer: ').upper()
                 if vastaus == kysymys_sanakirja["vastaus1"][0]:
