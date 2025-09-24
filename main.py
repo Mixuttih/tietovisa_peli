@@ -12,6 +12,17 @@ yhteys = mysql.connector.connect(
     autocommit=True
 )
 
+#Kysymys -funktio
+def kysymys(i):
+    if i < 6:
+        #Luodaan helppokysymys
+    elif i < 11:
+        #Luodaan keskivaikea kysymys
+    elif i < 16:
+        #Luodaan vaikea kysymys
+    else:
+        #Voittaja
+        return
 
 #High Score -funktio
 def highscore():
@@ -60,12 +71,9 @@ def game():
         if valinta == "START":
             username = input('Enter your username: ')
 
-            #Esimerkki-kysymys
-            print("This is a question?")
-            print("A. This is correct")
-            print("B. This in incorrect")
-            print("C. This is incorrect")
-            print("D. This is incorrect")
+            #Haetaan kysymys-sanakirja
+            current_round = 1
+            kysymys_sanakirja = kysymys(current_round)
 
             #Vastauskenttä
             vastaus = input('Enter your answer: ').upper()
