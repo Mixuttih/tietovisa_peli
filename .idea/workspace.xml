@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2623488d-6555-4241-ad9f-50e950c3fc0f" name="Changes" comment="kommentteja lisätty">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/tietovisa_peli.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/tietovisa_peli.iml" afterDir="false" />
+    <list default="true" id="2623488d-6555-4241-ad9f-50e950c3fc0f" name="Changes" comment="distance between x and x airport">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kysymykset.py" beforeDir="false" afterPath="$PROJECT_DIR$/kysymykset.py" afterDir="false" />
     </list>
@@ -198,7 +196,14 @@
       <option name="presentableId" value="LOCAL−00014" />
       <updated>1758705512711</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL−00015" summary="distance between x and x airport">
+      <option name="closed" value="true" />
+      <created>1759082701442</created>
+      <option name="number" value="LOCAL−00015" />
+      <option name="presentableId" value="LOCAL−00015" />
+      <updated>1759082701442</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,7 +230,8 @@
     <MESSAGE value="jatkettu kysymysfunktiota" />
     <MESSAGE value="kysymysfunktion palautus nyt toimiva" />
     <MESSAGE value="kommentteja lisätty" />
-    <option name="LAST_COMMIT_MESSAGE" value="kommentteja lisätty" />
+    <MESSAGE value="distance between x and x airport" />
+    <option name="LAST_COMMIT_MESSAGE" value="distance between x and x airport" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/tietovisa_peli$main.coverage" NAME="main Coverage Results" MODIFIED="1758706635544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
