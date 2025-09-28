@@ -5,10 +5,10 @@ import tarina
 #SQL yhteys
 yhteys = mysql.connector.connect(
     host='localhost',
-    port=3307,
+    port=3306,
     database='flight_game',
     user='root',
-    password='Sorsalampi2025',
+    password='Soulhunter1209',
     autocommit=True
 )
 
@@ -143,10 +143,95 @@ def scoreinsert(username, money):
     mycursor.execute(sql, val)
     yhteys.commit()
 
+
+def oljenkorret(kysymys_sanakirja, used_lifelines):
+
+    if used_lifelines:
+        print("\nOlet jo käyttänyt oljenkorret.")
+        return kysymys_sanakirja
+
+    print("\nOljenkorret:")
+    print("1. Kysy yleisöltä")
+    print("2. Puolita vastaukset")
+    print("3. Soita kaverille")
+    valinta = input("Valitse oljenkorsi (1/2/3): ")
+
+    if valinta == "1":
+        # Kysy yleisöltä
+        yleison_mielipide = {
+            "A": random.randint(0, 50),
+            "B": random.randint(0, 50),
+            "C": random.randint(0, 50),
+            "D": random.randint(0, 50),
+        }
+        oikea_vastaus_kirjain = ""
+        for i in kysymys_sanakirja:
+            if kysymys_sanakirja[i][2] == 1:
+                oikea_vastaus_kirjain = i
+                break
+
+        yleison_mielipide[oikea_vastaus_kirjain] = random.randint(50,
+                                                                  90)
+
+        print("\nYleisön mielipide:")
+        for kirjain, prosentti in yleison_mielipide.items():
+            if kirjain == "A":
+                print(f"A: {prosentti}%")
+            elif kirjain == "B":
+                print(f"B: {prosentti}%")
+            elif kirjain == "C":
+                print(f"C: {prosentti}%")
+            elif kirjain == "D":
+                print(f"D: {prosentti}%")
+        used_lifelines = True
+    elif valinta == "2":
+
+        oikea_vastaus_kirjain = ""
+        for i in kysymys_sanakirja:
+            if kysymys_sanakirja[i][2] == 1:
+                oikea_vastaus_kirjain = i
+                break
+
+        poistettavat_kirjaimet = []
+        for kirjain in kysymys_sanakirja:
+            if kirjain != oikea_vastaus_kirjain:
+                poistettavat_kirjaimet.append(kirjain)
+
+
+        poistettavat_kirjaimet = random.sample(poistettavat_kirjaimet, 2)
+
+        print("\nPuolitetut vastaukset:")
+        for kirjain in kysymys_sanakirja:
+            if kirjain not in poistettavat_kirjaimet:
+                if kirjain == "A":
+                    print(f"A: {kysymys_sanakirja["vastaus1"][1]}")
+                elif kirjain == "B":
+                    print(f"B: {kysymys_sanakirja["vastaus2"][1]}")
+                elif kirjain == "C":
+                    print(f"C: {kysymys_sanakirja["vastaus3"][1]}")
+                elif kirjain == "D":
+                    print(f"D: {kysymys_sanakirja["vastaus4"][1]}")
+        used_lifelines = True
+    elif valinta == "3":
+        # Soita kaverille
+        kaverin_vastaus = ""
+        for i in kysymys_sanakirja:
+            if kysymys_sanakirja[i][2] == 1:
+                kaverin_vastaus = kysymys_sanakirja[i][1]
+                break
+        print("\nKaverin vastaus:")
+        print(f"Minusta oikea vastaus on: {kaverin_vastaus}")
+        used_lifelines = True
+    else:
+        print("Virheellinen valinta.")
+    return kysymys_sanakirja
+
+
 #Peliprosessi
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
     game_over = False
+    used_lifelines = False
 
     # Pelaajan raha ja edistyminen
     money = 0
@@ -184,6 +269,9 @@ def game():
                     print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
                     print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
                     #Vastauskenttä
+                    kysymys_sanakirja = oljenkorret(kysymys_sanakirja, used_lifelines)
+
+
                     vastaus = input('Enter your answer: ').upper()
                     if vastaus == kysymys_sanakirja["vastaus1"][0]:
                         if kysymys_sanakirja["vastaus1"][2] == 1:
