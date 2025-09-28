@@ -10,6 +10,24 @@ sql5 = f"SELECT elevation_ft*0.3048 as elevation_m FROM airport WHERE name = '{k
 sql6 = f"SELECT elevation_ft*0.3048 as elevation_m FROM airport WHERE NOT name = '{oikea_vastaus[2]' ORDER BY RAND() LIMIT 3"
 # What is a distance between x and x airport?
 
+# get airport info
+def get_airport_info(icao):
+    sql = f'''SELECT iso_country, ident, name, latitude_deg, longitude_deg
+                  FROM airport
+                  WHERE ident = %s'''
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(sql, (icao,))
+    result = cursor.fetchone()
+    return result
+
+# calculate distance between two airports
+def calculate_distance(current, target):
+    start = get_airport_info(current)
+    end = get_airport_info(target)
+    return distance.distance((start['latitude_deg'], start['longitude_deg']),
+                             (end['latitude_deg'], end['longitude_deg'])).km
+
+
 # How much CO2 emissions does flight from x airport to x airport produce?
 
 # What is x airport's gps-code?
