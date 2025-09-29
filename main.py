@@ -299,7 +299,7 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
     else:
-        #Voittaja
+        #Jos saavutetaan maksimi-kierrokset, pelaaja on voittaja, ei luoda kysymystä
         return "winner"
 
     # Palautetaan funktiosta sanakirja, joka sisältää kysymyksen, vastaukset ja tiedon onko vastaus oikein vai väärin
@@ -319,7 +319,7 @@ def highscore():
     kursori = yhteys.cursor()
     kursori.execute(sql)
     tulos = kursori.fetchall()
-    #Printataan jokainen rivi
+    #Printataan jokainen rivi listaamaan top 10 -pelaajat
     for rivi in tulos:
         print(f"Name: {rivi[0]}, Score: {rivi[1]}")
     return
@@ -335,6 +335,7 @@ def scoreinsert(username, money):
 
 #Oljenkorsi -funktio
 def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
+    #Printataan lista oljenkorsista jotka ovat käytössä
     print("\nLifelines:")
     if olki1 == False:
         print("1. Ask the audience")
@@ -344,6 +345,7 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
         print("3. Call a friend")
     valinta = input("Choose a lifeline (1/2/3): ")
 
+    #Jos valitaan oljenkorsi 1.
     if valinta == "1":
         olki1 = True
         # Kysy yleisöltä
@@ -372,6 +374,7 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
             elif kirjain == "D":
                 print(f"D: {prosentti}%")
 
+    #Jos valitaan oljenkorsi 2.
     elif valinta == "2":
         olki2 = True
         oikea_vastaus_kirjain = ""
@@ -403,6 +406,7 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
                 elif kirjain == "vastaus4":
                     print(f"D: {kysymys_sanakirja["vastaus4"][1]}")
 
+    #Jos valitaan oljenkorsi 3.
     elif valinta == "3":
         olki3 = True
         # Soita kaverille
@@ -413,11 +417,20 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
                 break
         print("\nFriends answer:")
         print(f"I think the answer is: {kaverin_vastaus}")
+
+    #Jos syötteessä on virhe
     else:
         print("Incorrect input.")
+        #Printataan kysymys ja vaihtoehdot uudelleen
+        print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
+        print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
+        print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
+        print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
+        print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
 
     return kysymys_sanakirja, olki1, olki2, olki3
 
+#Palkinto -funktio, koska palkintomäärät eivät seuraa yhtä matemaattista kaavaa
 def prizecalc(current_round):
     if current_round == 2:
         return "100"
@@ -450,7 +463,6 @@ def prizecalc(current_round):
     elif current_round == 16:
         return "1000000"
 
-
 #Peliprosessi
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
@@ -459,10 +471,11 @@ def game():
     olki2 = False
     olki3 = False
 
-    # Pelaajan raha ja edistyminen
+    # Pelaajan raha ja kierrosten edistyminen
     money = 0
     current_round = 0
 
+    #Peli-loop
     while game_over == False:
         #Alkuteksti
         for line in tarina.getStory():
@@ -483,10 +496,11 @@ def game():
             #Haetaan kysymys-sanakirja
             current_round = 1
             while current_round < 17:
+                #Ajetaan funktio joka täyttää kysymys-sanakirjan
                 kysymys_sanakirja = kysymysfunktio(current_round)
 
                 if kysymys_sanakirja == "winner":
-                    print("You won!")
+                    print("You have won!")
                     break
                 else:
                     print(f"You have earned {money}€")
@@ -502,6 +516,8 @@ def game():
                     #Vastauskenttä
                     vastaus = input('Enter your answer: ').upper()
 
+                    #Vastauksen tarkistus
+                    #Jos pelaaja vastaa A
                     if vastaus == kysymys_sanakirja["vastaus1"][0]:
                         if kysymys_sanakirja["vastaus1"][2] == 1:
                             print("This answer is correct!")
@@ -510,6 +526,7 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+                    #Jos pelaaja vastaa B
                     elif vastaus == kysymys_sanakirja["vastaus2"][0]:
                         if kysymys_sanakirja["vastaus2"][2] == 1:
                             print("This answer is correct!")
@@ -518,6 +535,7 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+                    #Jos pelaaja vastaa C
                     elif vastaus == kysymys_sanakirja["vastaus3"][0]:
                         if kysymys_sanakirja["vastaus3"][2] == 1:
                             print("This answer is correct!")
@@ -526,6 +544,7 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+                    #Jos pelaaja vastaa D
                     elif vastaus == kysymys_sanakirja["vastaus4"][0]:
                         if kysymys_sanakirja["vastaus4"][2] == 1:
                             print("This answer is correct!")
@@ -534,14 +553,21 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+                    #Jos pelaaja haluaa käyttää oljenkorren
                     elif vastaus == "E":
+                        #Tarkistetaan onko pelaajalla oljenkorsia
                         if olki1 == True & olki2 == True & olki3 == True:
                             print("Incorrect input; you have no lifelines.")
                             break
                         else:
+                            #Ajetaan oljenkorsi-funktio
                             kysymys_sanakirja, olki1, olki2, olki3 = oljenkorret(kysymys_sanakirja, olki1, olki2, olki3)
-                            print(kysymys_sanakirja)
+
+                            #Kysytään kysymyksen vastaus uudelleen
                             vastaus = input('Enter your answer: ').upper()
+
+                            #Tarkistetaan vastaukset
+                            #Jos pelaaja vastaa A
                             if vastaus == kysymys_sanakirja["vastaus1"][0]:
                                 if kysymys_sanakirja["vastaus1"][2] == 1:
                                     print("This answer is correct!")
@@ -550,6 +576,8 @@ def game():
                                 else:
                                     print("This answer is incorrect!")
                                     break
+
+                            #Jos pelaaja vastaa B
                             elif vastaus == kysymys_sanakirja["vastaus2"][0]:
                                 if kysymys_sanakirja["vastaus2"][2] == 1:
                                     print("This answer is correct!")
@@ -558,6 +586,8 @@ def game():
                                 else:
                                     print("This answer is incorrect!")
                                     break
+
+                            #Jos pelaaja vastaa C
                             elif vastaus == kysymys_sanakirja["vastaus3"][0]:
                                 if kysymys_sanakirja["vastaus3"][2] == 1:
                                     print("This answer is correct!")
@@ -566,6 +596,8 @@ def game():
                                 else:
                                     print("This answer is incorrect!")
                                     break
+
+                            #Jos pelaaja vastaa D
                             elif vastaus == kysymys_sanakirja["vastaus4"][0]:
                                 if kysymys_sanakirja["vastaus4"][2] == 1:
                                     print("This answer is correct!")
@@ -574,14 +606,19 @@ def game():
                                 else:
                                     print("This answer is incorrect!")
                                     break
+
+                            #Jos pelaaja kirjoittaa väärin
                             else:
                                 print("Invalid answer!")
                                 break
 
+                    #Jos pelaaja kirjoittaa väärin
                     else:
                         print("Invalid answer!")
                         break
+            #Kun pelaajan kierrokset täyttyvät, tai pelaaja vastaa väärin, poistutaan peli-loopista
             break
+        #Asetetaan game_over -muuttujan arvo joka sulkee peliprosessin
         game_over = True
 
     #Palataan pois funktiosta
