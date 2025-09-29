@@ -471,9 +471,8 @@ def game():
     olki2 = False
     olki3 = False
 
-    # Pelaajan raha ja kierrosten edistyminen
+    # Pelaajan raha
     money = 0
-    current_round = 0
 
     #Peli-loop
     while game_over == False:
@@ -494,23 +493,33 @@ def game():
         if valinta == "START":
             username = input('Enter your username: ')
 
-            #Haetaan kysymys-sanakirja
+            #Pelaajan edistyminen
             current_round = 1
+
+            #Peli-loop
             while current_round < 17:
                 #Ajetaan funktio joka täyttää kysymys-sanakirjan
                 kysymys_sanakirja = kysymysfunktio(current_round)
 
+                #Jos funktio palauttaa arvon "winner", pelaaja voittaa
                 if kysymys_sanakirja == "winner":
                     print("You have won!")
                     break
+                #Muutoin funktio palauttaa kysymys-sanakirjan
                 else:
+                    #Nykyinen palkintomäärä
                     print(f"You have earned {money}€")
+                    #DEV CHEATS
                     print(kysymys_sanakirja)
+
+                    #Printataan kysymys ja vastaukset
                     print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
                     print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
                     print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
                     print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
                     print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+
+                    #Jos oljenkorsia on jäljellä, printataan ohje käyttää niitä
                     if olki1 == False or olki2 == False or olki3 == False:
                         print(f"E. Use a lifeline")
 
@@ -527,6 +536,7 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+
                     #Jos pelaaja vastaa B
                     elif vastaus == kysymys_sanakirja["vastaus2"][0]:
                         if kysymys_sanakirja["vastaus2"][2] == 1:
@@ -536,6 +546,7 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+
                     #Jos pelaaja vastaa C
                     elif vastaus == kysymys_sanakirja["vastaus3"][0]:
                         if kysymys_sanakirja["vastaus3"][2] == 1:
@@ -545,6 +556,7 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+
                     #Jos pelaaja vastaa D
                     elif vastaus == kysymys_sanakirja["vastaus4"][0]:
                         if kysymys_sanakirja["vastaus4"][2] == 1:
@@ -554,12 +566,15 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+
                     #Jos pelaaja haluaa käyttää oljenkorren
                     elif vastaus == "E":
                         #Tarkistetaan onko pelaajalla oljenkorsia
                         if olki1 == True & olki2 == True & olki3 == True:
                             print("Incorrect input; you have no lifelines.")
                             break
+
+                        #Jos oljenkorsia on jäljellä
                         else:
                             #Ajetaan oljenkorsi-funktio
                             kysymys_sanakirja, olki1, olki2, olki3 = oljenkorret(kysymys_sanakirja, olki1, olki2, olki3)
@@ -608,7 +623,7 @@ def game():
                                     print("This answer is incorrect!")
                                     break
 
-                            #Jos pelaaja kirjoittaa väärin
+                            #Jos pelaaja kirjoittaa väärin, tai yrittää valita oljenkorren uudelleen
                             else:
                                 print("Invalid answer!")
                                 break
