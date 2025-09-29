@@ -411,12 +411,28 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
         olki3 = True
         # Soita kaverille
         kaverin_vastaus = ""
-        for i in kysymys_sanakirja:
-            if kysymys_sanakirja[i][2] == 1:
-                kaverin_vastaus = kysymys_sanakirja[i][1]
-                break
+        error_margin = random.randint(1,100)
+        print(error_margin)
+
+        if error_margin <= 50:
+            for i in kysymys_sanakirja:
+                if kysymys_sanakirja[i][2] == 1:
+                    kaverin_vastaus = kysymys_sanakirja[i][1]
+                    break
+        else:
+            for i in kysymys_sanakirja:
+                if kysymys_sanakirja[i][2] == 0:
+                    kaverin_vastaus = kysymys_sanakirja[i][1]
+                    break
+
         print("\nFriends answer:")
         print(f"I think the answer is: {kaverin_vastaus}")
+        # Printataan kysymys ja vaihtoehdot uudelleen
+        print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
+        print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
+        print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
+        print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
+        print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
 
     #Jos syötteessä on virhe
     else:
