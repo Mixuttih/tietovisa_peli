@@ -5,10 +5,10 @@ import tarina
 #SQL yhteys
 yhteys = mysql.connector.connect(
     host='localhost',
-    port=3306,
+    port=3307,
     database='flight_game',
     user='root',
-    password='Soulhunter1209',
+    password='mikasana',
     autocommit=True
 )
 
@@ -144,19 +144,18 @@ def scoreinsert(username, money):
     yhteys.commit()
 
 
-def oljenkorret(kysymys_sanakirja, used_lifelines):
-
-    if used_lifelines:
-        print("\nOlet jo käyttänyt oljenkorret.")
-        return kysymys_sanakirja
-
+def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
     print("\nOljenkorret:")
-    print("1. Kysy yleisöltä")
-    print("2. Puolita vastaukset")
-    print("3. Soita kaverille")
+    if olki1 == False:
+        print("1. Kysy yleisöltä")
+    if olki2 == False:
+        print("2. Puolita vastaukset")
+    if olki3 == False:
+        print("3. Soita kaverille")
     valinta = input("Valitse oljenkorsi (1/2/3): ")
 
     if valinta == "1":
+        olki1 = True
         # Kysy yleisöltä
         yleison_mielipide = {
             "A": random.randint(0, 50),
@@ -183,9 +182,9 @@ def oljenkorret(kysymys_sanakirja, used_lifelines):
                 print(f"C: {prosentti}%")
             elif kirjain == "D":
                 print(f"D: {prosentti}%")
-        used_lifelines = True
-    elif valinta == "2":
 
+    elif valinta == "2":
+        olki2 = True
         oikea_vastaus_kirjain = ""
         for i in kysymys_sanakirja:
             if kysymys_sanakirja[i][2] == 1:
@@ -194,25 +193,26 @@ def oljenkorret(kysymys_sanakirja, used_lifelines):
 
         poistettavat_kirjaimet = []
         for kirjain in kysymys_sanakirja:
-            if kirjain != oikea_vastaus_kirjain:
-                poistettavat_kirjaimet.append(kirjain)
-
+            if kirjain != "kysymys":
+                if kirjain != oikea_vastaus_kirjain:
+                    poistettavat_kirjaimet.append(kirjain)
 
         poistettavat_kirjaimet = random.sample(poistettavat_kirjaimet, 2)
 
         print("\nPuolitetut vastaukset:")
         for kirjain in kysymys_sanakirja:
             if kirjain not in poistettavat_kirjaimet:
-                if kirjain == "A":
+                if kirjain == "vastaus1":
                     print(f"A: {kysymys_sanakirja["vastaus1"][1]}")
-                elif kirjain == "B":
+                elif kirjain == "vastaus2":
                     print(f"B: {kysymys_sanakirja["vastaus2"][1]}")
-                elif kirjain == "C":
+                elif kirjain == "vastaus3":
                     print(f"C: {kysymys_sanakirja["vastaus3"][1]}")
-                elif kirjain == "D":
+                elif kirjain == "vastaus4":
                     print(f"D: {kysymys_sanakirja["vastaus4"][1]}")
-        used_lifelines = True
+
     elif valinta == "3":
+        olki3 = True
         # Soita kaverille
         kaverin_vastaus = ""
         for i in kysymys_sanakirja:
@@ -221,17 +221,19 @@ def oljenkorret(kysymys_sanakirja, used_lifelines):
                 break
         print("\nKaverin vastaus:")
         print(f"Minusta oikea vastaus on: {kaverin_vastaus}")
-        used_lifelines = True
     else:
         print("Virheellinen valinta.")
-    return kysymys_sanakirja
+
+    return kysymys_sanakirja, olki1, olki2, olki3
 
 
 #Peliprosessi
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
     game_over = False
-    used_lifelines = False
+    olki1 = False
+    olki2 = False
+    olki3 = False
 
     # Pelaajan raha ja edistyminen
     money = 0
@@ -258,6 +260,7 @@ def game():
             current_round = 1
             while current_round < 17:
                 kysymys_sanakirja = kysymysfunktio(current_round)
+
                 if kysymys_sanakirja == "winner":
                     print("You won!")
                     break
@@ -268,11 +271,11 @@ def game():
                     print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
                     print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
                     print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+                    print(f"E. Use a lifeline")
+
                     #Vastauskenttä
-                    kysymys_sanakirja = oljenkorret(kysymys_sanakirja, used_lifelines)
-
-
                     vastaus = input('Enter your answer: ').upper()
+
                     if vastaus == kysymys_sanakirja["vastaus1"][0]:
                         if kysymys_sanakirja["vastaus1"][2] == 1:
                             print("This answer is correct!")
@@ -301,6 +304,42 @@ def game():
                         else:
                             print("This answer is incorrect!")
                             break
+                    elif vastaus == "E":
+                        kysymys_sanakirja, olki1, olki2, olki3 = oljenkorret(kysymys_sanakirja, olki1, olki2, olki3)
+                        print(kysymys_sanakirja)
+                        vastaus = input('Enter your answer: ').upper()
+                        if vastaus == kysymys_sanakirja["vastaus1"][0]:
+                            if kysymys_sanakirja["vastaus1"][2] == 1:
+                                print("This answer is correct!")
+                                current_round += 1
+                            else:
+                                print("This answer is incorrect!")
+                                break
+                        elif vastaus == kysymys_sanakirja["vastaus2"][0]:
+                            if kysymys_sanakirja["vastaus2"][2] == 1:
+                                print("This answer is correct!")
+                                current_round += 1
+                            else:
+                                print("This answer is incorrect!")
+                                break
+                        elif vastaus == kysymys_sanakirja["vastaus3"][0]:
+                            if kysymys_sanakirja["vastaus3"][2] == 1:
+                                print("This answer is correct!")
+                                current_round += 1
+                            else:
+                                print("This answer is incorrect!")
+                                break
+                        elif vastaus == kysymys_sanakirja["vastaus4"][0]:
+                            if kysymys_sanakirja["vastaus4"][2] == 1:
+                                print("This answer is correct!")
+                                current_round += 1
+                            else:
+                                print("This answer is incorrect!")
+                                break
+                        else:
+                            print("Invalid answer!")
+                            break
+
                     else:
                         print("Invalid answer!")
                         break
