@@ -418,6 +418,39 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
 
     return kysymys_sanakirja, olki1, olki2, olki3
 
+def prizecalc(current_round):
+    if current_round == 2:
+        return "100"
+    elif current_round == 3:
+        return "200"
+    elif current_round == 4:
+        return "300"
+    elif current_round == 5:
+        return "500"
+    elif current_round == 6:
+        return "1000"
+    elif current_round == 7:
+        return "2000"
+    elif current_round == 8:
+        return "4000"
+    elif current_round == 9:
+        return "8000"
+    elif current_round == 10:
+        return "16000"
+    elif current_round == 11:
+        return "32000"
+    elif current_round == 12:
+        return "64000"
+    elif current_round == 13:
+        return "125000"
+    elif current_round == 14:
+        return "250000"
+    elif current_round == 15:
+        return "500000"
+    elif current_round == 16:
+        return "1000000"
+
+
 #Peliprosessi
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
@@ -456,6 +489,7 @@ def game():
                     print("You won!")
                     break
                 else:
+                    print(f"You have earned {money}€")
                     print(kysymys_sanakirja)
                     print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
                     print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
@@ -472,6 +506,7 @@ def game():
                         if kysymys_sanakirja["vastaus1"][2] == 1:
                             print("This answer is correct!")
                             current_round += 1
+                            money = prizecalc(current_round)
                         else:
                             print("This answer is incorrect!")
                             break
@@ -479,6 +514,7 @@ def game():
                         if kysymys_sanakirja["vastaus2"][2] == 1:
                             print("This answer is correct!")
                             current_round += 1
+                            money = prizecalc(current_round)
                         else:
                             print("This answer is incorrect!")
                             break
@@ -486,6 +522,7 @@ def game():
                         if kysymys_sanakirja["vastaus3"][2] == 1:
                             print("This answer is correct!")
                             current_round += 1
+                            money = prizecalc(current_round)
                         else:
                             print("This answer is incorrect!")
                             break
@@ -493,6 +530,7 @@ def game():
                         if kysymys_sanakirja["vastaus4"][2] == 1:
                             print("This answer is correct!")
                             current_round += 1
+                            money = prizecalc(current_round)
                         else:
                             print("This answer is incorrect!")
                             break
@@ -508,6 +546,7 @@ def game():
                                 if kysymys_sanakirja["vastaus1"][2] == 1:
                                     print("This answer is correct!")
                                     current_round += 1
+                                    money = prizecalc(current_round)
                                 else:
                                     print("This answer is incorrect!")
                                     break
@@ -515,6 +554,7 @@ def game():
                                 if kysymys_sanakirja["vastaus2"][2] == 1:
                                     print("This answer is correct!")
                                     current_round += 1
+                                    money = prizecalc(current_round)
                                 else:
                                     print("This answer is incorrect!")
                                     break
@@ -522,6 +562,7 @@ def game():
                                 if kysymys_sanakirja["vastaus3"][2] == 1:
                                     print("This answer is correct!")
                                     current_round += 1
+                                    money = prizecalc(current_round)
                                 else:
                                     print("This answer is incorrect!")
                                     break
@@ -529,6 +570,7 @@ def game():
                                 if kysymys_sanakirja["vastaus4"][2] == 1:
                                     print("This answer is correct!")
                                     current_round += 1
+                                    money = prizecalc(current_round)
                                 else:
                                     print("This answer is incorrect!")
                                     break
@@ -552,6 +594,7 @@ scoreinsert(score[0], score[1])
 
 #Kysytään haluaako pelaaja käynnistää pelin uudelleen
 print("GAME OVER!")
+print(f"Your total winnings are {score[1]}€")
 restart = input('Do you want to try again? (y/n): ').upper()
 if restart == 'Y':
     game()
