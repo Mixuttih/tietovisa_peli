@@ -480,6 +480,7 @@ def game():
         #Alkuteksti
         for line in tarina.getStory():
             print(line)
+        print("")
         print("Type [START] to start the game.")
         print("Type [SCORES] to see the highscores.")
         valinta = input("[START]/[SCORES]: ").upper()

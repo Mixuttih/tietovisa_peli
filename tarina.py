@@ -1,9 +1,9 @@
 import textwrap
 
 story ='''Welcome to Private jet!
-The game whare you can win money by answering aviation related questions! 
-Are you true plane enthusiast? Can you name every airport at the drop of a hat? 
-This is a game for you!
+The game whare you win money by answering aviation related questions! 
+Are you a true plane enthusiast? Can you name every airport at the drop of a hat? 
+This is the game for you!
 
 On each round you will be asked one question and you have to choose an answer from four options. 
 There will be 15 rounds.
