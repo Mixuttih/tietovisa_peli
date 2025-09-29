@@ -50,6 +50,7 @@ def kysymysfunktio(i):
         vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
         vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
         vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
+
     elif i < 11:
         #Luodaan keskivaikea kysymys
 
@@ -143,7 +144,7 @@ def scoreinsert(username, money):
     mycursor.execute(sql, val)
     yhteys.commit()
 
-
+#Oljenkorsi -funktio
 def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
     print("\nLifelines:")
     if olki1 == False:
@@ -224,7 +225,6 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
         print("Incorrect input.")
 
     return kysymys_sanakirja, olki1, olki2, olki3
-
 
 #Peliprosessi
 def game():
