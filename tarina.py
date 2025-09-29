@@ -12,11 +12,12 @@ If you have trouble answering the question, you may use your lifelines; 50/50, A
 50/50 will eliminate 2 of the wrong answers. 
 Ask the audience will give percentage of people that think that the option is correct. 
 Call a Friend hear what your friend thinks is the answer. 
+Remember, you may only use one(1) lifeline per question!
 If you persist until the end the grand prize of 1 000 000€ awaits you!
-Ready to play? Good luck! '''
+Ready to play? Good luck!'''
 
 # Set column width to 80 characters
-wrapper = textwrap.TextWrapper(width=380, break_long_words=False, replace_whitespace=False)
+wrapper = textwrap.TextWrapper(width=400, break_long_words=False, replace_whitespace=False)
 # Wrap text
 word_list = wrapper.wrap(text=story)
 
