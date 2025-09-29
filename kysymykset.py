@@ -1,7 +1,7 @@
 import random
 import mysql.connector
 import tarina
-
+from geopy import distance
 
 #SQL yhteys
 yhteys = mysql.connector.connect(
@@ -30,7 +30,7 @@ sql9 = f"SELECT gps_code FROM airport WHERE NOT ident = '{sql8}' ORDER BY RAND()
 
 # What is a distance between x and x airport?
 sql10 = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 2"
-sql11 = f"SELECT name ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 5"
+sql11 = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 5"
 
 # get airport info
 def get_airport_info(icao):
