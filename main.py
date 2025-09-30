@@ -5,10 +5,10 @@ import tarina
 #SQL yhteys
 yhteys = mysql.connector.connect(
     host='localhost',
-    port=3306,
+    port=3307,
     database='flight_game',
     user='root',
-    password='Sorsalampi2025',
+    password='mikasana',
     autocommit=True
 )
 
@@ -347,92 +347,101 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
 
     #Jos valitaan oljenkorsi 1.
     if valinta == "1":
-        olki1 = True
-        # Kysy yleisöltä
-        yleison_mielipide = {
-            "A": random.randint(0, 60),
-            "B": random.randint(0, 60),
-            "C": random.randint(0, 60),
-            "D": random.randint(0, 60),
-        }
-        oikea_vastaus_kirjain = ""
-        for i in kysymys_sanakirja:
-            if kysymys_sanakirja[i][2] == 1:
-                oikea_vastaus_kirjain = kysymys_sanakirja[i][0]
-                break
+        if olki1 == False:
+            olki1 = True
+            # Kysy yleisöltä
+            yleison_mielipide = {
+                "A": random.randint(0, 60),
+                "B": random.randint(0, 60),
+                "C": random.randint(0, 60),
+                "D": random.randint(0, 60),
+            }
+            oikea_vastaus_kirjain = ""
+            for i in kysymys_sanakirja:
+                if kysymys_sanakirja[i][2] == 1:
+                    oikea_vastaus_kirjain = kysymys_sanakirja[i][0]
+                    break
 
-        yleison_mielipide[oikea_vastaus_kirjain] = random.randint(40,90)
+            yleison_mielipide[oikea_vastaus_kirjain] = random.randint(40,90)
 
-        print("\nAudience thinks it is:")
-        for kirjain, prosentti in yleison_mielipide.items():
-            if kirjain == "A":
-                print(f"A: {prosentti}%")
-            elif kirjain == "B":
-                print(f"B: {prosentti}%")
-            elif kirjain == "C":
-                print(f"C: {prosentti}%")
-            elif kirjain == "D":
-                print(f"D: {prosentti}%")
+            print("\nAudience thinks it is:")
+            for kirjain, prosentti in yleison_mielipide.items():
+                if kirjain == "A":
+                    print(f"A: {prosentti}%")
+                elif kirjain == "B":
+                    print(f"B: {prosentti}%")
+                elif kirjain == "C":
+                    print(f"C: {prosentti}%")
+                elif kirjain == "D":
+                    print(f"D: {prosentti}%")
+            # Printataan kysymys ja vaihtoehdot uudelleen
+            print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
+            print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
+            print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
+            print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
+            print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+
 
     #Jos valitaan oljenkorsi 2.
     elif valinta == "2":
-        olki2 = True
-        oikea_vastaus_kirjain = ""
-        for i in kysymys_sanakirja:
-            if kysymys_sanakirja[i][1] == 1:
-                oikea_vastaus_kirjain = i
-                break
+        if olki2 == False:
+            olki2 = True
+            oikea_vastaus_kirjain = ""
+            for i in kysymys_sanakirja:
+                if kysymys_sanakirja[i][2] == 1:
+                    oikea_vastaus_kirjain = i
+                    break
 
-        poistettavat_kirjaimet = []
-        for kirjain in kysymys_sanakirja:
-            if kirjain != "kysymys":
-                if kirjain != "kysymysteksti":
-                    if kirjain != oikea_vastaus_kirjain:
-                        poistettavat_kirjaimet.append(kirjain)
+            poistettavat_kirjaimet = []
+            for kirjain in kysymys_sanakirja:
+                if kirjain != "kysymys":
+                    if kirjain != "kysymysteksti":
+                        if kirjain != oikea_vastaus_kirjain:
+                            poistettavat_kirjaimet.append(kirjain)
 
-        poistettavat_kirjaimet = random.sample(poistettavat_kirjaimet, 2)
-        print(poistettavat_kirjaimet)
-        print("\n2 wrong answers have been eliminated:")
-        print(
-            f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
-        for kirjain in kysymys_sanakirja:
-            if kirjain not in poistettavat_kirjaimet:
-                if kirjain == "vastaus1":
-                    print(f"A: {kysymys_sanakirja["vastaus1"][1]}")
-                elif kirjain == "vastaus2":
-                    print(f"B: {kysymys_sanakirja["vastaus2"][1]}")
-                elif kirjain == "vastaus3":
-                    print(f"C: {kysymys_sanakirja["vastaus3"][1]}")
-                elif kirjain == "vastaus4":
-                    print(f"D: {kysymys_sanakirja["vastaus4"][1]}")
+            poistettavat_kirjaimet = random.sample(poistettavat_kirjaimet, 2)
+
+            print("\n2 wrong answers have been eliminated:")
+            print(
+                f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
+            for kirjain in kysymys_sanakirja:
+                if kirjain not in poistettavat_kirjaimet:
+                    if kirjain == "vastaus1":
+                        print(f"A: {kysymys_sanakirja["vastaus1"][1]}")
+                    elif kirjain == "vastaus2":
+                        print(f"B: {kysymys_sanakirja["vastaus2"][1]}")
+                    elif kirjain == "vastaus3":
+                        print(f"C: {kysymys_sanakirja["vastaus3"][1]}")
+                    elif kirjain == "vastaus4":
+                        print(f"D: {kysymys_sanakirja["vastaus4"][1]}")
 
     #Jos valitaan oljenkorsi 3.
     elif valinta == "3":
-        olki3 = True
-        # Soita kaverille
-        kaverin_vastaus = ""
-        error_margin = random.randint(1,100)
-        print(error_margin)
+        if olki3 == False:
+            olki3 = True
+            # Soita kaverille
+            kaverin_vastaus = ""
+            error_margin = random.randint(1,100)
 
-        if error_margin <= 50:
-            for i in kysymys_sanakirja:
-                if kysymys_sanakirja[i][2] == 1:
-                    kaverin_vastaus = kysymys_sanakirja[i][1]
-                    break
-        else:
-            for i in kysymys_sanakirja:
-                if kysymys_sanakirja[i][2] == 0:
-                    kaverin_vastaus = kysymys_sanakirja[i][1]
-                    break
+            if error_margin <= 50:
+                for i in kysymys_sanakirja:
+                    if kysymys_sanakirja[i][2] == 1:
+                        kaverin_vastaus = kysymys_sanakirja[i][1]
+                        break
+            else:
+                for i in kysymys_sanakirja:
+                    if kysymys_sanakirja[i][2] == 0:
+                        kaverin_vastaus = kysymys_sanakirja[i][1]
+                        break
 
-        print("\nFriends answer:")
-        print(f"I think the answer is: {kaverin_vastaus}")
-        # Printataan kysymys ja vaihtoehdot uudelleen
-        print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
-        print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
-        print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
-        print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
-        print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+            print("\nFriends answer:")
+            print(f"I think the answer is: {kaverin_vastaus}")
+            # Printataan kysymys ja vaihtoehdot uudelleen
+            print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
+            print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
+            print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
+            print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
+            print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
 
     #Jos syötteessä on virhe
     else:
@@ -526,7 +535,7 @@ def game():
                     #Nykyinen palkintomäärä
                     print(f"You have earned {money}€")
                     #DEV CHEATS
-                    print(kysymys_sanakirja)
+                    #print(kysymys_sanakirja)
 
                     #Printataan kysymys ja vastaukset
                     print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
