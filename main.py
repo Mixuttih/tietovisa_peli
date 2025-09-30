@@ -524,6 +524,7 @@ def game():
     olki1 = False
     olki2 = False
     olki3 = False
+    username = ""
 
     # Pelaajan raha
     money = 0
@@ -558,7 +559,7 @@ def game():
                 #Jos funktio palauttaa arvon "winner", pelaaja voittaa
                 if kysymys_sanakirja == "winner":
                     print("You have won!")
-                    break
+                    game_over = True
                 #Muutoin funktio palauttaa kysymys-sanakirjan
                 else:
                     #Nykyinen palkintomäärä
@@ -596,6 +597,7 @@ def game():
                             money = prizecalc(current_round)
                         else:
                             print("This answer is incorrect!")
+                            game_over = True
                             break
 
                     #Jos pelaaja vastaa B
@@ -606,6 +608,7 @@ def game():
                             money = prizecalc(current_round)
                         else:
                             print("This answer is incorrect!")
+                            game_over = True
                             break
 
                     #Jos pelaaja vastaa C
@@ -616,6 +619,7 @@ def game():
                             money = prizecalc(current_round)
                         else:
                             print("This answer is incorrect!")
+                            game_over = True
                             break
 
                     #Jos pelaaja vastaa D
@@ -626,6 +630,7 @@ def game():
                             money = prizecalc(current_round)
                         else:
                             print("This answer is incorrect!")
+                            game_over = True
                             break
 
                     #Jos pelaaja haluaa käyttää oljenkorren
@@ -633,6 +638,7 @@ def game():
                         #Tarkistetaan onko pelaajalla oljenkorsia
                         if olki1 == True & olki2 == True & olki3 == True:
                             print("Incorrect input; you have no lifelines.")
+                            game_over = True
                             break
 
                         #Jos oljenkorsia on jäljellä
@@ -652,6 +658,7 @@ def game():
                                     money = prizecalc(current_round)
                                 else:
                                     print("This answer is incorrect!")
+                                    game_over = True
                                     break
 
                             #Jos pelaaja vastaa B
@@ -662,6 +669,7 @@ def game():
                                     money = prizecalc(current_round)
                                 else:
                                     print("This answer is incorrect!")
+                                    game_over = True
                                     break
 
                             #Jos pelaaja vastaa C
@@ -672,6 +680,7 @@ def game():
                                     money = prizecalc(current_round)
                                 else:
                                     print("This answer is incorrect!")
+                                    game_over = True
                                     break
 
                             #Jos pelaaja vastaa D
@@ -682,25 +691,29 @@ def game():
                                     money = prizecalc(current_round)
                                 else:
                                     print("This answer is incorrect!")
+                                    game_over = True
                                     break
 
                             #Jos pelaaja kirjoittaa väärin, tai yrittää valita oljenkorren uudelleen
                             else:
                                 print("Invalid answer!")
+                                game_over = True
                                 break
 
                     #Jos pelaaja kirjoittaa väärin
                     else:
                         print("Invalid answer!")
+                        game_over = True
                         break
             #Kun pelaajan kierrokset täyttyvät, tai pelaaja vastaa väärin, poistutaan peli-loopista
             break
         else:
             print("Incorrect input.")
+            game_over = True
             break
-        #Asetetaan game_over -muuttujan arvo joka sulkee peliprosessin
-        game_over = True
-
+    if game_over == True:
+        print("GAME OVER!")
+        return username, money
     #Palataan pois funktiosta
     return username, money
 
@@ -710,7 +723,7 @@ score = game()
 scoreinsert(score[0], score[1])
 
 #Kysytään haluaako pelaaja käynnistää pelin uudelleen
-print("GAME OVER!")
+
 print(f"Your total winnings are {score[1]}€")
 restart = input('Do you want to try again? (y/n): ').upper()
 if restart == 'Y':
