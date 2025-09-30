@@ -14,6 +14,22 @@ yhteys = mysql.connector.connect(
     autocommit=True
 )
 
+def vastausvalikko(kysymys_sanakirja):
+    if kysymys_sanakirja["kysymysteksti"][0] == "What is the distance between ":
+        print(
+            f"{kysymys_sanakirja['kysymysteksti'][0]}{kysymys_sanakirja['kysymys'][0][0]} and {kysymys_sanakirja['kysymys'][1][0]}{kysymys_sanakirja['kysymysteksti'][1]}")
+        print(f"{kysymys_sanakirja['vastaus1'][0]}. {kysymys_sanakirja['vastaus1'][1]}")
+        print(f"{kysymys_sanakirja['vastaus2'][0]}. {kysymys_sanakirja['vastaus2'][1]}")
+        print(f"{kysymys_sanakirja['vastaus3'][0]}. {kysymys_sanakirja['vastaus3'][1]}")
+        print(f"{kysymys_sanakirja['vastaus4'][0]}. {kysymys_sanakirja['vastaus4'][1]}")
+    else:
+        print(
+            f"{kysymys_sanakirja['kysymysteksti'][0]}{kysymys_sanakirja['kysymys'][0]}{kysymys_sanakirja['kysymysteksti'][1]}")
+        print(f"{kysymys_sanakirja['vastaus1'][0]}. {kysymys_sanakirja['vastaus1'][1]}")
+        print(f"{kysymys_sanakirja['vastaus2'][0]}. {kysymys_sanakirja['vastaus2'][1]}")
+        print(f"{kysymys_sanakirja['vastaus3'][0]}. {kysymys_sanakirja['vastaus3'][1]}")
+        print(f"{kysymys_sanakirja['vastaus4'][0]}. {kysymys_sanakirja['vastaus4'][1]}")
+
 #Kysymys -funktio
 def kysymysfunktio(i):
     # Sanakirja, johon vastaukset talletetaan
@@ -29,7 +45,7 @@ def kysymysfunktio(i):
 
         #KYSYMYS: MISSÄ LENTOKENTTÄ SIJAITSEE (EU/US)
         if kysymysvalinta == 1:
-            question_text = ["What is country is ", " located in?"]
+            question_text = ["What country is ", " located in?"]
             #Haetaan kysymykseen muuttuja
             sql = f"SELECT name, ident FROM airport WHERE continent = 'EU' OR continent = 'US' ORDER BY RAND() LIMIT 1"
             kursori = yhteys.cursor()
@@ -152,7 +168,7 @@ def kysymysfunktio(i):
 
         # KYSYMYS: MISSÄ LENTOKENTTÄ SIJAITSEE (AU/SA)
         elif kysymysvalinta == 2:
-            question_text = ["What is country is ", " located in?"]
+            question_text = ["What country is ", " located in?"]
             # Haetaan kysymykseen muuttuja
             sql = f"SELECT name, ident FROM airport WHERE continent = 'AU' OR continent = 'SA' ORDER BY RAND() LIMIT 1"
             kursori = yhteys.cursor()
@@ -211,7 +227,7 @@ def kysymysfunktio(i):
 
         #KYSYMYS: LENTOKENTTIEN VÄLINEN ETÄISYYS
         elif kysymysvalinta == 4:
-            question_text = ["What is the distance between ", " airports in meters?"]
+            question_text = ["What is the distance between ", " airports in kilometers?"]
             #Haetaan kysymykseen muuttujat
             sql = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 2"
             kursori = yhteys.cursor()
@@ -271,7 +287,7 @@ def kysymysfunktio(i):
 
         #KYSYMYS: MISSÄ LENTOKENTTÄ SIJAITSEE (AF/AS)
         elif kysymysvalinta == 2:
-            question_text = ["What is country is ", " located in?"]
+            question_text = ["What country is ", " located in?"]
             # Haetaan kysymykseen muuttuja
             sql = f"SELECT name, ident FROM airport WHERE continent = 'AF' OR continent = 'AS' ORDER BY RAND() LIMIT 1"
             kursori = yhteys.cursor()
@@ -396,19 +412,15 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
             print("\nAudience thinks it is:")
             for kirjain, prosentti in yleison_mielipide.items():
                 if kirjain == "A":
-                    print(f"A: {prosentti}%")
+                    print(f"A: {prosentti} votes")
                 elif kirjain == "B":
-                    print(f"B: {prosentti}%")
+                    print(f"B: {prosentti} votes")
                 elif kirjain == "C":
-                    print(f"C: {prosentti}%")
+                    print(f"C: {prosentti} votes")
                 elif kirjain == "D":
-                    print(f"D: {prosentti}%")
+                    print(f"D: {prosentti} votes")
             # Printataan kysymys ja vaihtoehdot uudelleen
-            print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
-            print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
-            print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
-            print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
-            print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+            vastausvalikko(kysymys_sanakirja)
 
 
     #Jos valitaan oljenkorsi 2.
@@ -431,8 +443,10 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
             poistettavat_kirjaimet = random.sample(poistettavat_kirjaimet, 2)
 
             print("\n2 wrong answers have been eliminated:")
-            print(
-                f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
+            if kysymys_sanakirja["kysymysteksti"][0] == "What is the distance between ":
+                print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys'][0][0]} and {kysymys_sanakirja['kysymys'][1][0]}{kysymys_sanakirja["kysymysteksti"][1]}")
+            else:
+                print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys'][0]}{kysymys_sanakirja["kysymysteksti"][1]}")
             for kirjain in kysymys_sanakirja:
                 if kirjain not in poistettavat_kirjaimet:
                     if kirjain == "vastaus1":
@@ -466,21 +480,13 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
             print("\nFriends answer:")
             print(f"I think the answer is: {kaverin_vastaus}")
             # Printataan kysymys ja vaihtoehdot uudelleen
-            print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
-            print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
-            print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
-            print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
-            print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+            vastausvalikko(kysymys_sanakirja)
 
     #Jos syötteessä on virhe
     else:
         print("Incorrect input.")
         #Printataan kysymys ja vaihtoehdot uudelleen
-        print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
-        print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
-        print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
-        print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
-        print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+        vastausvalikko(kysymys_sanakirja)
 
     return kysymys_sanakirja, olki1, olki2, olki3
 
@@ -560,26 +566,16 @@ def game():
                 if kysymys_sanakirja == "winner":
                     print("You have won!")
                     game_over = True
+                    break
                 #Muutoin funktio palauttaa kysymys-sanakirjan
                 else:
                     #Nykyinen palkintomäärä
                     print(f"You have earned {money}€")
                     #DEV CHEATS
-                    print(kysymys_sanakirja)
+                    #print(kysymys_sanakirja)
 
                     #Printataan kysymys ja vastaukset
-                    if kysymys_sanakirja["kysymysteksti"][0] == "What is the distance between ":
-                        print(f"{kysymys_sanakirja['kysymysteksti'][0]}{kysymys_sanakirja['kysymys'][0][0]} and {kysymys_sanakirja['kysymys'][1][0]}{kysymys_sanakirja['kysymysteksti'][1]}")
-                        print(f"{kysymys_sanakirja['vastaus1'][0]}. {kysymys_sanakirja['vastaus1'][1]}")
-                        print(f"{kysymys_sanakirja['vastaus2'][0]}. {kysymys_sanakirja['vastaus2'][1]}")
-                        print(f"{kysymys_sanakirja['vastaus3'][0]}. {kysymys_sanakirja['vastaus3'][1]}")
-                        print(f"{kysymys_sanakirja['vastaus4'][0]}. {kysymys_sanakirja['vastaus4'][1]}")
-                    else:
-                        print(f"{kysymys_sanakirja['kysymysteksti'][0]}{kysymys_sanakirja['kysymys'][0]}{kysymys_sanakirja['kysymysteksti'][1]}")
-                        print(f"{kysymys_sanakirja['vastaus1'][0]}. {kysymys_sanakirja['vastaus1'][1]}")
-                        print(f"{kysymys_sanakirja['vastaus2'][0]}. {kysymys_sanakirja['vastaus2'][1]}")
-                        print(f"{kysymys_sanakirja['vastaus3'][0]}. {kysymys_sanakirja['vastaus3'][1]}")
-                        print(f"{kysymys_sanakirja['vastaus4'][0]}. {kysymys_sanakirja['vastaus4'][1]}")
+                    vastausvalikko(kysymys_sanakirja)
 
                     #Jos oljenkorsia on jäljellä, printataan ohje käyttää niitä
                     if olki1 == False or olki2 == False or olki3 == False:
