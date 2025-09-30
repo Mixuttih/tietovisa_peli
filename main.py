@@ -1,6 +1,8 @@
 import random
 import mysql.connector
 import tarina
+from geopy import distance
+from geopy.geocoders import Nominatim
 
 #SQL yhteys
 yhteys = mysql.connector.connect(
@@ -116,7 +118,7 @@ def kysymysfunktio(i):
 
     elif i < 11:
         #Luodaan keskivaikea kysymys
-        kysymysvalinta = random.randint(1, 3)
+        kysymysvalinta = random.randint(1, 4)
 
         #KYSYMYS: MIKÄ ON LENTOKENTÄN ICAO -KOODI
         if kysymysvalinta == 1:
@@ -148,7 +150,7 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
 
-            # KYSYMYS: MISSÄ LENTOKENTTÄ SIJAITSEE (AU/SA)
+        # KYSYMYS: MISSÄ LENTOKENTTÄ SIJAITSEE (AU/SA)
         elif kysymysvalinta == 2:
             question_text = ["What is country is ", " located in?"]
             # Haetaan kysymykseen muuttuja
@@ -206,6 +208,33 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
+
+        #KYSYMYS: LENTOKENTTIEN VÄLINEN ETÄISYYS
+        elif kysymysvalinta == 4:
+            question_text = ["What is the distance between ", " airports in meters?"]
+            #Haetaan kysymykseen muuttujat
+            sql = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 2"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            kysymys = kursori.fetchall()
+
+            #Lasketaan kahden haetun lentokentän etäisyys
+            start = [kysymys[0][2], kysymys[0][3]]
+            end = [kysymys[1][2], kysymys[1][3]]
+
+            print(start)
+            print(end)
+            #Oikea vastaus palautetaan kokonaislukuna
+            oikea_vastaus = [int(distance.distance((start[0], start[1]), (end[0], end[1])).km)]
+
+            #Luodaan random luvut vääriksi vastauksiksi
+            vaarat_vastaukset = [random.randint(0,10000), random.randint(0,10000), random.randint(0,10000)]
+
+            # Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
+            vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
+            vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0], 0
+            vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1], 0
+            vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2], 0
 
     elif i < 16:
         #Luodaan vaikea kysymys
@@ -308,7 +337,7 @@ def kysymysfunktio(i):
         "vastaus2": ["B", vastauslista["vastaus2"][0], vastauslista["vastaus2"][1]],
         "vastaus3": ["C", vastauslista["vastaus3"][0], vastauslista["vastaus3"][1]],
         "vastaus4": ["D", vastauslista["vastaus4"][0], vastauslista["vastaus4"][1]],
-        "kysymys": kysymys[0],
+        "kysymys": kysymys,
         "kysymysteksti": question_text
     }
 
@@ -535,14 +564,21 @@ def game():
                     #Nykyinen palkintomäärä
                     print(f"You have earned {money}€")
                     #DEV CHEATS
-                    #print(kysymys_sanakirja)
+                    print(kysymys_sanakirja)
 
                     #Printataan kysymys ja vastaukset
-                    print(f"{kysymys_sanakirja["kysymysteksti"][0]}{kysymys_sanakirja['kysymys']}{kysymys_sanakirja["kysymysteksti"][1]}")
-                    print(f"{kysymys_sanakirja["vastaus1"][0]}. {kysymys_sanakirja["vastaus1"][1]}")
-                    print(f"{kysymys_sanakirja["vastaus2"][0]}. {kysymys_sanakirja["vastaus2"][1]}")
-                    print(f"{kysymys_sanakirja["vastaus3"][0]}. {kysymys_sanakirja["vastaus3"][1]}")
-                    print(f"{kysymys_sanakirja["vastaus4"][0]}. {kysymys_sanakirja["vastaus4"][1]}")
+                    if kysymys_sanakirja["kysymysteksti"][0] == "What is the distance between ":
+                        print(f"{kysymys_sanakirja['kysymysteksti'][0]}{kysymys_sanakirja['kysymys'][0][0]} and {kysymys_sanakirja['kysymys'][1][0]}{kysymys_sanakirja['kysymysteksti'][1]}")
+                        print(f"{kysymys_sanakirja['vastaus1'][0]}. {kysymys_sanakirja['vastaus1'][1]}")
+                        print(f"{kysymys_sanakirja['vastaus2'][0]}. {kysymys_sanakirja['vastaus2'][1]}")
+                        print(f"{kysymys_sanakirja['vastaus3'][0]}. {kysymys_sanakirja['vastaus3'][1]}")
+                        print(f"{kysymys_sanakirja['vastaus4'][0]}. {kysymys_sanakirja['vastaus4'][1]}")
+                    else:
+                        print(f"{kysymys_sanakirja['kysymysteksti'][0]}{kysymys_sanakirja['kysymys'][0]}{kysymys_sanakirja['kysymysteksti'][1]}")
+                        print(f"{kysymys_sanakirja['vastaus1'][0]}. {kysymys_sanakirja['vastaus1'][1]}")
+                        print(f"{kysymys_sanakirja['vastaus2'][0]}. {kysymys_sanakirja['vastaus2'][1]}")
+                        print(f"{kysymys_sanakirja['vastaus3'][0]}. {kysymys_sanakirja['vastaus3'][1]}")
+                        print(f"{kysymys_sanakirja['vastaus4'][0]}. {kysymys_sanakirja['vastaus4'][1]}")
 
                     #Jos oljenkorsia on jäljellä, printataan ohje käyttää niitä
                     if olki1 == False or olki2 == False or olki3 == False:
@@ -658,6 +694,9 @@ def game():
                         print("Invalid answer!")
                         break
             #Kun pelaajan kierrokset täyttyvät, tai pelaaja vastaa väärin, poistutaan peli-loopista
+            break
+        else:
+            print("Incorrect input.")
             break
         #Asetetaan game_over -muuttujan arvo joka sulkee peliprosessin
         game_over = True
