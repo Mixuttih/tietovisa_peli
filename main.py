@@ -255,6 +255,7 @@ def kysymysfunktio(i):
         #Luodaan vaikea kysymys
         kysymysvalinta = random.randint(1, 4)
 
+        #KYSYMYS: MINKÄ LENTOKENTÄN ICAO KOODI ON?
         if kysymysvalinta == 1:
             question_text = ["Which airport has the ICAO code of ", "?"]
             # Haetaan kysymykseen muuttuja
