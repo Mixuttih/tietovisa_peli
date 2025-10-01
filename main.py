@@ -548,6 +548,8 @@ def prizecalc(current_round):
         return 500000
     elif current_round == 16:
         return 1000000
+    return None
+
 
 #Peliprosessi
 def game():
