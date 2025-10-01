@@ -2,7 +2,6 @@ import random
 import mysql.connector
 import tarina
 from geopy import distance
-from geopy.geocoders import Nominatim
 
 #SQL yhteys
 yhteys = mysql.connector.connect(
@@ -611,21 +610,27 @@ def game():
                     #Vastauskenttä
                     vastaus = input('Enter your answer: ').upper()
 
-                    #Vastauksen tarkistus
-                    muuttuja = ""
+                    #Vastauksen tarkistuksen muuttuja
+                    vastausmuuttuja = ""
+
+                    #Tarkistetaan minkä vastauksen pelaaja syötti
                     if vastaus == kysymys_sanakirja["vastaus1"][0]:
-                        muuttuja = "vastaus1"
+                        vastausmuuttuja = "vastaus1"
                     elif vastaus == kysymys_sanakirja["vastaus2"][0]:
-                        muuttuja = "vastaus2"
+                        vastausmuuttuja = "vastaus2"
                     elif vastaus == kysymys_sanakirja["vastaus3"][0]:
-                        muuttuja = "vastaus3"
+                        vastausmuuttuja = "vastaus3"
                     elif vastaus == kysymys_sanakirja["vastaus4"][0]:
-                        muuttuja = "vastaus4"
-                    if muuttuja in kysymys_sanakirja:
-                        if kysymys_sanakirja[muuttuja][2] == 1:
+                        vastausmuuttuja = "vastaus4"
+
+                    #Tarkistetaan onko pelaajan syöte yksi kysymyksen vastauksista
+                    if vastausmuuttuja in kysymys_sanakirja:
+                        #Jos vastaus on oikein
+                        if kysymys_sanakirja[vastausmuuttuja][2] == 1:
                             print("This answer is correct!")
                             current_round += 1
                             money = prizecalc(current_round)
+                        #Jos vastaus on väärin
                         else:
                             print("This answer is incorrect!")
                             game_over = True
@@ -647,22 +652,27 @@ def game():
                             #Kysytään kysymyksen vastaus uudelleen
                             vastaus = input('Enter your answer: ').upper()
 
-                            #Tarkistetaan vastaukset
-                            #Jos pelaaja vastaa A
-                            muuttuja = ""
+                            #Vastauksen tarkistuksen muuttuja
+                            vastausmuuttuja = ""
+
+                            # Tarkistetaan minkä vastauksen pelaaja syötti
                             if vastaus == kysymys_sanakirja["vastaus1"][0]:
-                                muuttuja = "vastaus1"
+                                vastausmuuttuja = "vastaus1"
                             elif vastaus == kysymys_sanakirja["vastaus2"][0]:
-                                muuttuja = "vastaus2"
+                                vastausmuuttuja = "vastaus2"
                             elif vastaus == kysymys_sanakirja["vastaus3"][0]:
-                                muuttuja = "vastaus3"
+                                vastausmuuttuja = "vastaus3"
                             elif vastaus == kysymys_sanakirja["vastaus4"][0]:
-                                muuttuja = "vastaus4"
-                            if muuttuja in kysymys_sanakirja:
-                                if kysymys_sanakirja[muuttuja][2] == 1:
+                                vastausmuuttuja = "vastaus4"
+
+                            #Tarkistetaan onko pelaajan syöte yksi kysymyksen vastauksista
+                            if vastausmuuttuja in kysymys_sanakirja:
+                                #Jos vastaus on oikein
+                                if kysymys_sanakirja[vastausmuuttuja][2] == 1:
                                     print("This answer is correct!")
                                     current_round += 1
                                     money = prizecalc(current_round)
+                                #Jos vastaus on väärin
                                 else:
                                     print("This answer is incorrect!")
                                     game_over = True
