@@ -612,42 +612,17 @@ def game():
                     vastaus = input('Enter your answer: ').upper()
 
                     #Vastauksen tarkistus
-                    #Jos pelaaja vastaa A
+                    muuttuja = ""
                     if vastaus == kysymys_sanakirja["vastaus1"][0]:
-                        if kysymys_sanakirja["vastaus1"][2] == 1:
-                            print("This answer is correct!")
-                            current_round += 1
-                            money = prizecalc(current_round)
-                        else:
-                            print("This answer is incorrect!")
-                            game_over = True
-                            break
-
-                    #Jos pelaaja vastaa B
+                        muuttuja = "vastaus1"
                     elif vastaus == kysymys_sanakirja["vastaus2"][0]:
-                        if kysymys_sanakirja["vastaus2"][2] == 1:
-                            print("This answer is correct!")
-                            current_round += 1
-                            money = prizecalc(current_round)
-                        else:
-                            print("This answer is incorrect!")
-                            game_over = True
-                            break
-
-                    #Jos pelaaja vastaa C
+                        muuttuja = "vastaus2"
                     elif vastaus == kysymys_sanakirja["vastaus3"][0]:
-                        if kysymys_sanakirja["vastaus3"][2] == 1:
-                            print("This answer is correct!")
-                            current_round += 1
-                            money = prizecalc(current_round)
-                        else:
-                            print("This answer is incorrect!")
-                            game_over = True
-                            break
-
-                    #Jos pelaaja vastaa D
+                        muuttuja = "vastaus3"
                     elif vastaus == kysymys_sanakirja["vastaus4"][0]:
-                        if kysymys_sanakirja["vastaus4"][2] == 1:
+                        muuttuja = "vastaus4"
+                    if muuttuja in kysymys_sanakirja:
+                        if kysymys_sanakirja[muuttuja][2] == 1:
                             print("This answer is correct!")
                             current_round += 1
                             money = prizecalc(current_round)
@@ -674,41 +649,17 @@ def game():
 
                             #Tarkistetaan vastaukset
                             #Jos pelaaja vastaa A
+                            muuttuja = ""
                             if vastaus == kysymys_sanakirja["vastaus1"][0]:
-                                if kysymys_sanakirja["vastaus1"][2] == 1:
-                                    print("This answer is correct!")
-                                    current_round += 1
-                                    money = prizecalc(current_round)
-                                else:
-                                    print("This answer is incorrect!")
-                                    game_over = True
-                                    break
-
-                            #Jos pelaaja vastaa B
+                                muuttuja = "vastaus1"
                             elif vastaus == kysymys_sanakirja["vastaus2"][0]:
-                                if kysymys_sanakirja["vastaus2"][2] == 1:
-                                    print("This answer is correct!")
-                                    current_round += 1
-                                    money = prizecalc(current_round)
-                                else:
-                                    print("This answer is incorrect!")
-                                    game_over = True
-                                    break
-
-                            #Jos pelaaja vastaa C
+                                muuttuja = "vastaus2"
                             elif vastaus == kysymys_sanakirja["vastaus3"][0]:
-                                if kysymys_sanakirja["vastaus3"][2] == 1:
-                                    print("This answer is correct!")
-                                    current_round += 1
-                                    money = prizecalc(current_round)
-                                else:
-                                    print("This answer is incorrect!")
-                                    game_over = True
-                                    break
-
-                            #Jos pelaaja vastaa D
+                                muuttuja = "vastaus3"
                             elif vastaus == kysymys_sanakirja["vastaus4"][0]:
-                                if kysymys_sanakirja["vastaus4"][2] == 1:
+                                muuttuja = "vastaus4"
+                            if muuttuja in kysymys_sanakirja:
+                                if kysymys_sanakirja[muuttuja][2] == 1:
                                     print("This answer is correct!")
                                     current_round += 1
                                     money = prizecalc(current_round)
