@@ -12,6 +12,7 @@ yhteys = mysql.connector.connect(
     password='mikasana',
     autocommit=True
 )
+
 #Vastausvalikko -funktio, joka printtaa kysymyksen ja vastausvaihtoehdot
 def vastausvalikko(kysymys_sanakirja):
     if kysymys_sanakirja["kysymysteksti"][0] == "What is the distance between ":
@@ -452,7 +453,6 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
                     print(f"D: {prosentti} votes")
             # Printataan kysymys ja vaihtoehdot uudelleen
             vastausvalikko(kysymys_sanakirja)
-
 
     #Jos valitaan oljenkorsi 2.
     elif valinta == "2":
