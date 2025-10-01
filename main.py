@@ -12,7 +12,7 @@ yhteys = mysql.connector.connect(
     password='mikasana',
     autocommit=True
 )
-
+#Vastausvalikko -funktio, joka printtaa kysymyksen ja vastausvaihtoehdot
 def vastausvalikko(kysymys_sanakirja):
     if kysymys_sanakirja["kysymysteksti"][0] == "What is the distance between ":
         print(
@@ -29,7 +29,7 @@ def vastausvalikko(kysymys_sanakirja):
         print(f"{kysymys_sanakirja['vastaus3'][0]}. {kysymys_sanakirja['vastaus3'][1]}")
         print(f"{kysymys_sanakirja['vastaus4'][0]}. {kysymys_sanakirja['vastaus4'][1]}")
 
-#Kysymys -funktio
+#Kysymys -funktio, joka asettaa sanakirjaan kysymyksen ja vastaukset
 def kysymysfunktio(i):
     # Sanakirja, johon vastaukset talletetaan
     vastauslista = {}
@@ -38,8 +38,9 @@ def kysymysfunktio(i):
     random_lista = ["1", "2", "3", "4"]
     random.shuffle(random_lista)
 
+    #Jos kierrosnumero on alle 6, valitaan kysymys helpoista kysymyksistä
     if i < 6:
-        #Luodaan helppokysymys, valitaan 1 eri kysymyksistä
+        #Luodaan helppo kysymys, valitaan 1 eri kysymyksistä
         kysymysvalinta = random.randint(1, 3)
 
         #KYSYMYS: MISSÄ LENTOKENTTÄ SIJAITSEE (EU/US)
@@ -128,6 +129,7 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2], 0
 
+    #Jos kierrosnumero on alle 11, valitaan kysymys keskivaikeista kysymyksistä
     elif i < 11:
         #Luodaan keskivaikea kysymys
         kysymysvalinta = random.randint(1, 4)
@@ -248,6 +250,7 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2], 0
 
+    #Jos kierrosnumero on alle 16, valitaan kysymys vaikeista kysymyksistä
     elif i < 16:
         #Luodaan vaikea kysymys
         kysymysvalinta = random.randint(1, 4)
@@ -369,8 +372,9 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
+
+    # Jos saavutetaan maksimi-kierrokset, pelaaja on voittaja, ei luoda kysymystä
     else:
-        #Jos saavutetaan maksimi-kierrokset, pelaaja on voittaja, ei luoda kysymystä
         return "winner"
 
     # Palautetaan funktiosta sanakirja, joka sisältää kysymyksen, vastaukset ja tiedon onko vastaus oikein vai väärin
@@ -383,7 +387,7 @@ def kysymysfunktio(i):
         "kysymysteksti": question_text
     }
 
-#High Score -funktio
+#High Score -funktio, joka printtaa Top 10 -pelaajaa tietokannasta
 def highscore():
     #Haetaan pelaajien nimet ja pisteet taulusta, järjestetään ne ja rajoitetaan vain 10 parhaaseen tulokseen
     sql = f"SELECT name, score FROM highscores ORDER BY score DESC LIMIT 10"
@@ -395,7 +399,7 @@ def highscore():
         print(f"Name: {rivi[0]}, Score: {rivi[1]}")
     return
 
-#Score Insert -funktio
+#Score Insert -funktio, jolla pelaajan pisteet lisätään pelin jälkeen
 def scoreinsert(username, money):
     mycursor = yhteys.cursor()
     #Lisätään pelaajan nimi ja pisteet highscores -tauluun
@@ -404,7 +408,7 @@ def scoreinsert(username, money):
     mycursor.execute(sql, val)
     yhteys.commit()
 
-#Oljenkorsi -funktio
+#Oljenkorsi -funktio, jossa pelaaja valitsee oljenkorren helpoittaakseen peliä
 def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
     #Printataan lista oljenkorsista jotka ovat käytössä
     print("\nLifelines:")
@@ -550,8 +554,7 @@ def prizecalc(current_round):
         return 1000000
     return None
 
-
-#Peliprosessi
+#Peliprosessi, jota kutsutaan pelin käynnistämiseksi
 def game():
     # Muuttuja joka määrittää kysytäänkö kysymyksiä
     game_over = False
