@@ -10,7 +10,7 @@ yhteys = mysql.connector.connect(
     port=3307,
     database='flight_game',
     user='root',
-    password='Sorsalampi2025',
+    password='mikasana',
     autocommit=True
 )
 
@@ -90,7 +90,7 @@ def kysymysfunktio(i):
             oikea_vastaus = kursori.fetchone()
 
             # Haetaan 3 väärää vastausta
-            sql = f"SELECT elevation_ft*0.3048 as elevation_m FROM airport WHERE NOT ident = '{kysymys[1]}' AND NOT elevation_ft*0.3048 = {oikea_vastaus[0]} ORDER BY RAND() LIMIT 3"
+            sql = f"SELECT DISTINCT elevation_ft*0.3048 as elevation_m FROM airport WHERE NOT ident = '{kysymys[1]}' AND NOT elevation_ft*0.3048 = {oikea_vastaus[0]} ORDER BY RAND() LIMIT 3"
             kursori = yhteys.cursor()
             kursori.execute(sql)
             # Väärät vastaukset muuttujaan
@@ -102,35 +102,32 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
 
-        #KYSYMYS: MIKÄ ON LENTOKENTÄN GPS-KOODI (EU/US)
+        # KYSYMYS: LENTOKENTTIEN VÄLINEN ETÄISYYS (EU)
         elif kysymysvalinta == 3:
-            question_text = ["What is the GPS Code of ", "?"]
-            # Haetaan kysymykseen muuttuja
-            sql = f"SELECT name, ident FROM airport WHERE (gps_code <> '') AND (continent = 'EU' OR continent = 'US') ORDER BY RAND() LIMIT 1"
+            question_text = ["What is the distance between ", " airports in kilometers?"]
+            # Haetaan kysymykseen muuttujat
+            sql = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' ORDER BY RAND() LIMIT 2"
             kursori = yhteys.cursor()
             kursori.execute(sql)
-            # Haun tulos muuttujaan
-            kysymys = kursori.fetchone()
+            kysymys = kursori.fetchall()
 
-            #Haetaan oikea vastaus
-            sql = f"SELECT gps_code FROM airport WHERE ident = '{kysymys[1]}' AND gps_code <> ''"
-            kursori = yhteys.cursor()
-            kursori.execute(sql)
-            # Oikea vastaus muuttujaan
-            oikea_vastaus = kursori.fetchone()
+            # Lasketaan kahden haetun lentokentän etäisyys
+            start = [kysymys[0][2], kysymys[0][3]]
+            end = [kysymys[1][2], kysymys[1][3]]
 
-            # Haetaan 3 väärää vastausta
-            sql = f"SELECT gps_code FROM airport WHERE NOT ident = '{kysymys[1]}' AND gps_code != '' ORDER BY RAND() LIMIT 3"
-            kursori = yhteys.cursor()
-            kursori.execute(sql)
-            # Väärät vastaukset muuttujaan
-            vaarat_vastaukset = kursori.fetchall()
+            print(start)
+            print(end)
+            # Oikea vastaus palautetaan kokonaislukuna
+            oikea_vastaus = [int(distance.distance((start[0], start[1]), (end[0], end[1])).km)]
+
+            # Luodaan random luvut vääriksi vastauksiksi
+            vaarat_vastaukset = [random.randint(0, 10000), random.randint(0, 10000), random.randint(0, 10000)]
 
             # Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
             vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
-            vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
-            vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
-            vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
+            vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0], 0
+            vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1], 0
+            vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2], 0
 
     elif i < 11:
         #Luodaan keskivaikea kysymys
@@ -213,7 +210,7 @@ def kysymysfunktio(i):
             oikea_vastaus = kursori.fetchone()
 
             # Haetaan 3 väärää vastausta
-            sql = f"SELECT elevation_ft*0.3048 as elevation_m FROM airport WHERE NOT ident = '{kysymys[1]}'AND NOT elevation_ft*0.3048 = {oikea_vastaus[0]} ORDER BY RAND() LIMIT 3"
+            sql = f"SELECT DISTINCT elevation_ft*0.3048 as elevation_m FROM airport WHERE NOT ident = '{kysymys[1]}'AND NOT elevation_ft*0.3048 = {oikea_vastaus[0]} ORDER BY RAND() LIMIT 3"
             kursori = yhteys.cursor()
             kursori.execute(sql)
             # Väärät vastaukset muuttujaan
@@ -254,7 +251,7 @@ def kysymysfunktio(i):
 
     elif i < 16:
         #Luodaan vaikea kysymys
-        kysymysvalinta = random.randint(1, 3)
+        kysymysvalinta = random.randint(1, 4)
 
         if kysymysvalinta == 1:
             question_text = ["Which airport has the ICAO code of ", "?"]
@@ -333,6 +330,36 @@ def kysymysfunktio(i):
 
             # Haetaan 3 väärää vastausta
             sql = f"SELECT elevation_ft*0.3048 as elevation_m FROM airport WHERE NOT ident = '{kysymys[1]}' ORDER BY RAND() LIMIT 3"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            # Väärät vastaukset muuttujaan
+            vaarat_vastaukset = kursori.fetchall()
+
+            # Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
+            vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
+            vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
+            vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
+            vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
+
+        # KYSYMYS: MIKÄ ON LENTOKENTÄN GPS-KOODI (EU/US)
+        elif kysymysvalinta == 4:
+            question_text = ["What is the GPS Code of ", "?"]
+            # Haetaan kysymykseen muuttuja
+            sql = f"SELECT name, ident FROM airport WHERE (gps_code <> '') AND (continent = 'EU' OR continent = 'US') ORDER BY RAND() LIMIT 1"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            # Haun tulos muuttujaan
+            kysymys = kursori.fetchone()
+
+            #Haetaan oikea vastaus
+            sql = f"SELECT gps_code FROM airport WHERE ident = '{kysymys[1]}' AND gps_code <> ''"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            # Oikea vastaus muuttujaan
+            oikea_vastaus = kursori.fetchone()
+
+            # Haetaan 3 väärää vastausta
+            sql = f"SELECT gps_code FROM airport WHERE NOT ident = '{kysymys[1]}' AND gps_code != '' ORDER BY RAND() LIMIT 3"
             kursori = yhteys.cursor()
             kursori.execute(sql)
             # Väärät vastaukset muuttujaan
@@ -493,35 +520,35 @@ def oljenkorret(kysymys_sanakirja, olki1, olki2, olki3):
 #Palkinto -funktio, koska palkintomäärät eivät seuraa yhtä matemaattista kaavaa
 def prizecalc(current_round):
     if current_round == 2:
-        return "100"
+        return 100
     elif current_round == 3:
-        return "200"
+        return 200
     elif current_round == 4:
-        return "300"
+        return 300
     elif current_round == 5:
-        return "500"
+        return 500
     elif current_round == 6:
-        return "1000"
+        return 1000
     elif current_round == 7:
-        return "2000"
+        return 2000
     elif current_round == 8:
-        return "4000"
+        return 4000
     elif current_round == 9:
-        return "8000"
+        return 8000
     elif current_round == 10:
-        return "16000"
+        return 16000
     elif current_round == 11:
-        return "32000"
+        return 32000
     elif current_round == 12:
-        return "64000"
+        return 64000
     elif current_round == 13:
-        return "125000"
+        return 125000
     elif current_round == 14:
-        return "250000"
+        return 250000
     elif current_round == 15:
-        return "500000"
+        return 500000
     elif current_round == 16:
-        return "1000000"
+        return 1000000
 
 #Peliprosessi
 def game():
@@ -707,20 +734,51 @@ def game():
             print("Incorrect input.")
             game_over = True
             break
+    #Jos pelaaja vastaa väärin, palataan pois funktiosta
     if game_over == True:
+        print(f"Your winnings are {money}€")
+
+        #Jäljellä olevien oljenkorsien antama bonus
+        lifeline_bonus = 0
+        if olki1 == False:
+            lifeline_bonus += current_round * 100
+        if olki2 == False:
+            lifeline_bonus += current_round * 100
+        if olki3 == False:
+            lifeline_bonus += current_round * 100
+
+        print(f"Un-used Lifeline Bonus: {lifeline_bonus}")
+        #Lisätään bonus rahoihin
+        money += lifeline_bonus
+
+        print(f"Your total winnings are {money}€")
         print("GAME OVER!")
+        # Lisätään highscore tiedot tietokantaan
+        scoreinsert(username, money)
         return username, money
-    #Palataan pois funktiosta
+
+    #Jos pelaaja voittaa, palataan pois funktiosta
+    print(f"Your winnings are {money}€")
+    # Jäljellä olevien oljenkorsien antama bonus
+    lifeline_bonus = 0
+    if olki1 == False:
+        lifeline_bonus += current_round * 100
+    if olki2 == False:
+        lifeline_bonus += current_round * 100
+    if olki3 == False:
+        lifeline_bonus += current_round * 100
+    print(f"Un-used Lifeline Bonus: {lifeline_bonus}€")
+    money += lifeline_bonus
+    print(f"Your total winnings are {money}€")
+    print("CONGRATULATIONS! YOU ARE A MASTER AIRPORT KNOWER!")
+    # Lisätään highscore tiedot tietokantaan
+    scoreinsert(username, money)
     return username, money
 
-#Aloitetaan peli-funktio, joka palauttaa käyttäjänimen ja pisteet muuttujaan
-score = game()
-#Lisätään tiedot tietokantaan
-scoreinsert(score[0], score[1])
+#Aloitetaan peli-funktio
+game()
 
 #Kysytään haluaako pelaaja käynnistää pelin uudelleen
-
-print(f"Your total winnings are {score[1]}€")
 restart = input('Do you want to try again? (y/n): ').upper()
 if restart == 'Y':
     game()
