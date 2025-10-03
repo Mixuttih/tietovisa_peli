@@ -251,6 +251,7 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2], 0
 
+
     #Jos kierrosnumero on alle 16, valitaan kysymys vaikeista kysymyksistä
     elif i < 16:
         #Luodaan vaikea kysymys

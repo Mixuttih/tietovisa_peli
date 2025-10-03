@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2623488d-6555-4241-ad9f-50e950c3fc0f" name="Changes" comment="kysymykset sql">
+    <list default="true" id="2623488d-6555-4241-ad9f-50e950c3fc0f" name="Changes" comment="tappelen distancen kanssa, kesken">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kysymykset.py" beforeDir="false" afterPath="$PROJECT_DIR$/kysymykset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -23,12 +23,12 @@
     &quot;assignee&quot;: &quot;Mixuttih&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Mixuttih/tietovisa_peli.git",
-    "accountId": "0ab3f609-9be7-4e92-8625-27bf6745868f"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Mixuttih/tietovisa_peli.git&quot;,
+    &quot;accountId&quot;: &quot;0ab3f609-9be7-4e92-8625-27bf6745868f&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -100,6 +100,7 @@
       <workItem from="1758527460517" duration="1705000" />
       <workItem from="1759049399457" duration="4582000" />
       <workItem from="1759068334178" duration="2088000" />
+      <workItem from="1759477808204" duration="4742000" />
     </task>
     <task id="LOCAL−00001" summary="Pohjan alku">
       <option name="closed" value="true" />
@@ -206,7 +207,14 @@
       <option name="presentableId" value="LOCAL−00015" />
       <updated>1759160910355</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL−00016" summary="tappelen distancen kanssa, kesken">
+      <option name="closed" value="true" />
+      <created>1759248647080</created>
+      <option name="number" value="LOCAL−00016" />
+      <option name="presentableId" value="LOCAL−00016" />
+      <updated>1759248647080</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,11 +241,12 @@
     <MESSAGE value="jatkettu kysymysfunktiota" />
     <MESSAGE value="kysymysfunktion palautus nyt toimiva" />
     <MESSAGE value="kommentteja lisätty" />
-    <option name="LAST_COMMIT_MESSAGE" value="kommentteja lisätty" />
+    <MESSAGE value="tappelen distancen kanssa, kesken" />
+    <option name="LAST_COMMIT_MESSAGE" value="tappelen distancen kanssa, kesken" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tietovisa_peli_2$main.coverage" NAME="main Coverage Results" MODIFIED="1759245185878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/tietovisa_peli_2$kysymykset.coverage" NAME="kysymykset Coverage Results" MODIFIED="1759248485374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tietovisa_peli_2$main.coverage" NAME="main Coverage Results" MODIFIED="1759478108038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tietovisa_peli_2$kysymykset.coverage" NAME="kysymykset Coverage Results" MODIFIED="1759482599206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/tietovisa_peli$main.coverage" NAME="main Coverage Results" MODIFIED="1759127993153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

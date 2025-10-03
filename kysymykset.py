@@ -30,7 +30,7 @@ sql9 = f"SELECT gps_code FROM airport WHERE NOT ident = '{sql8}' ORDER BY RAND()
 
 # What is a distance between x and x airport?
 kysymys = print
-'''
+
 def get_random_airports():
     sql10 = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 2"
     cursor = yhteys.cursor()
@@ -47,9 +47,22 @@ def specific_distance(result):
     return distance.distance((latitude1, longitude1),
                                 (latitude2, longitude2))
 
-print(specific_distance())
+#print(specific_distance())
     #menee monimutkaiseksi ei voi nimetä result suoraan
 print("-------------------------------------------")
+sql10 = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 2"
+
+def spesific_distance():
+    sql11 = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport WHERE idet = '{sql10}"
+    cursor = yhteys.cursor()
+    cursor.execute(sql10)
+    result = cursor.fetchall()
+    name1, ident1, latitude1, longitude1 = result[0]
+    name2, ident2, latitude2, longitude2 = result[1]
+    return result[0], result[1], distance.distance((latitude1, longitude1),
+                             (latitude2, longitude2))
+print(spesific_distance())
+
 def random_distance():
     sql10 = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 2"
     cursor = yhteys.cursor()
@@ -60,10 +73,10 @@ def random_distance():
     return result[0], result[1], distance.distance((latitude1, longitude1),
                              (latitude2, longitude2))
 
-print(random_distance())
+#print(random_distance())
 
 
-'''
+
 sql11 = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 6"
 
 # get airport info
@@ -86,13 +99,50 @@ def calculate_distance(current, target):
 
 print(get_airport_info)
 
-
+'''
 
 # How much CO2 emissions does flight from x airport to x airport produce?
 
+if kysymysvalinta == 5:
+    question_text = ["How much CO2 emmission are produced on a flight between ", " airports on Airbus A320?"]
+    # Haetaan kysymykseen muuttujat
+    sql = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 2"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    kysymys = kursori.fetchall()
+
+    # Lasketaan kahden haetun lentokentän etäisyys
+    start = [kysymys[0][2], kysymys[0][3]]
+    end = [kysymys[1][2], kysymys[1][3]]
+
+    print(start)
+    print(end)
+    # Oikea vastaus palautetaan kokonaislukuna
+    oikea_vastaus = [int(distance.distance((start[0], start[1]), (end[0], end[1])).km)] * 9.2
+    kg / km
+
+    # Luodaan random luvut vääriksi vastauksiksi
+    vaarat_vastaukset = [random.randint(0, 10000), random.randint(0, 10000), random.randint(0, 10000)] * 9.2
+    kg / km
+
+    # Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
+    vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
+    vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0], 0
+    vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1], 0
+    vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2], 0
+
 
 # Which is highest airport from sea level?
+sql13 = f" SELECT name, ident, MAX(elevation_ft)*0.3048 as elevation_m FROM airport"
+cursor = yhteys.cursor()
+cursor.execute(sql13)
+kysymys = cursor.fetchone()
+print(kysymys)
 
-# Which is lowest airport from sea level?
+#Which is lowest airport from sea level?
+sql14 = f"SELECT name, ident, MIN(elevation_ft)*0.3048 as elevation_m FROM airport"
+cursor.execute(sql14)
+kysymys2 = cursor.fetchone()
+print(kysymys2)'''
 
-#Which airport is most uneconomical airport you can fly to from helsinki-vantaa airport?'''
+#Which airport is most uneconomical airport you can fly to from helsinki-vantaa airport?
