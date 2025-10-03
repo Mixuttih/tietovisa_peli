@@ -15,7 +15,7 @@ yhteys = mysql.connector.connect(
 
 #Vastausvalikko -funktio, joka printtaa kysymyksen ja vastausvaihtoehdot
 def vastausvalikko(kysymys_sanakirja):
-    if kysymys_sanakirja["kysymysteksti"][0] == "What is the distance between ":
+    if kysymys_sanakirja["kysymysteksti"][0] == "What is the distance between " or kysymys_sanakirja["kysymysteksti"][0] == "How many kilotons of CO2 emmission are produced on a flight between ":
         print(
             f"{kysymys_sanakirja['kysymysteksti'][0]}{kysymys_sanakirja['kysymys'][0][0]} and {kysymys_sanakirja['kysymys'][1][0]}{kysymys_sanakirja['kysymysteksti'][1]}")
         print(f"{kysymys_sanakirja['vastaus1'][0]}. {kysymys_sanakirja['vastaus1'][1]}")
@@ -42,7 +42,7 @@ def kysymysfunktio(i):
     #Jos kierrosnumero on alle 6, valitaan kysymys helpoista kysymyksistä
     if i < 6:
         #Luodaan helppo kysymys, valitaan 1 eri kysymyksistä
-        kysymysvalinta = random.randint(1, 3)
+        kysymysvalinta = random.randint(1, 4)
 
         #KYSYMYS: MISSÄ LENTOKENTTÄ SIJAITSEE (EU/US)
         if kysymysvalinta == 1:
@@ -129,6 +129,35 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0], 0
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2], 0
+
+        #KYSYMYS: MIKÄ LENTOKENTTÄ ON KORKEIN
+        elif kysymysvalinta == 4:
+            question_text = ["Which airport has the elevation of ", " meters from the sea surface?"]
+            # Haetaan kysymykseen muuttuja
+            sql = f"SELECT elevation_ft*0.3048 as elevation_m, ident FROM airport ORDER BY RAND() LIMIT 1"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            # Haun tulos muuttujaan
+            kysymys = kursori.fetchone()
+
+            sql = f"SELECT name FROM airport WHERE ident = '{kysymys[1]}'"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            # Oikea vastaus muuttujaan
+            oikea_vastaus = kursori.fetchone()
+
+            # Haetaan 3 väärää vastausta
+            sql = f"SELECT DISTINCT name FROM airport WHERE NOT ident = '{kysymys[1]}' AND NOT elevation_ft*0.3048 = {kysymys[0]} ORDER BY RAND() LIMIT 3"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            # Väärät vastaukset muuttujaan
+            vaarat_vastaukset = kursori.fetchall()
+
+            # Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
+            vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0], 1
+            vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
+            vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
+            vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
 
     #Jos kierrosnumero on alle 11, valitaan kysymys keskivaikeista kysymyksistä
     elif i < 11:
@@ -255,7 +284,7 @@ def kysymysfunktio(i):
     #Jos kierrosnumero on alle 16, valitaan kysymys vaikeista kysymyksistä
     elif i < 16:
         #Luodaan vaikea kysymys
-        kysymysvalinta = random.randint(1, 4)
+        kysymysvalinta = random.randint(1, 5)
 
         #KYSYMYS: MINKÄ LENTOKENTÄN ICAO KOODI ON?
         if kysymysvalinta == 1:
@@ -375,6 +404,33 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0][0], 0
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1][0], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2][0], 0
+
+        #KYSYMYS: PALJON PÄÄSTÖJÄ MATKASTA
+        elif kysymysvalinta == 5:
+            question_text = ["How many kilotons of CO2 emmission are produced on a flight between ", " airports on Airbus A320?"]
+            #Haetaan kysymykseen muuttujat
+            sql = f"SELECT name, ident, latitude_deg, longitude_deg FROM airport ORDER BY RAND() LIMIT 2"
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            kysymys = kursori.fetchall()
+
+            #Lasketaan kahden haetun lentokentän etäisyys
+            start = [kysymys[0][2], kysymys[0][3]]
+            end = [kysymys[1][2], kysymys[1][3]]
+
+            print(start)
+            print(end)
+            #Oikea vastaus palautetaan kokonaislukuna
+            oikea_vastaus = [int(distance.distance((start[0], start[1]), (end[0], end[1])).km)]
+
+            #Luodaan random luvut vääriksi vastauksiksi
+            vaarat_vastaukset = [random.randint(0,10000), random.randint(0,10000), random.randint(0,10000)]
+
+            # Luodaan vastauslista, jossa vastauksen järjestys määräytyy random_listan mukaan
+            vastauslista[f"vastaus{random_lista[0]}"] = oikea_vastaus[0]*9, 1
+            vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0]*9, 0
+            vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1]*9, 0
+            vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2]*9, 0
 
     # Jos saavutetaan maksimi-kierrokset, pelaaja on voittaja, ei luoda kysymystä
     else:
@@ -605,7 +661,7 @@ def game():
                     #Nykyinen palkintomäärä
                     print(f"You have earned {money}€")
                     #DEV CHEATS
-                    #print(kysymys_sanakirja)
+                    print(kysymys_sanakirja)
 
                     #Printataan kysymys ja vastaukset
                     vastausvalikko(kysymys_sanakirja)

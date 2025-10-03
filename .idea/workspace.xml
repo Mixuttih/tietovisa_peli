@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2623488d-6555-4241-ad9f-50e950c3fc0f" name="Changes" comment="tappelen distancen kanssa, kesken">
+    <list default="true" id="2623488d-6555-4241-ad9f-50e950c3fc0f" name="Changes" comment="Koodin siistimistä">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/tietovisa_peli.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/tietovisa_peli.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kysymykset.py" beforeDir="false" afterPath="$PROJECT_DIR$/kysymykset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +18,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -26,9 +29,12 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Mixuttih/tietovisa_peli.git&quot;,
-    &quot;accountId&quot;: &quot;0ab3f609-9be7-4e92-8625-27bf6745868f&quot;
+    &quot;accountId&quot;: &quot;9f4bd3d1-97e7-4e54-92ad-5c5801b5d596&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -40,7 +46,6 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.kysymykset.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -52,7 +57,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -84,8 +89,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-PY-252.23892.515" />
-        <option value="bundled-python-sdk-7e47963ff851-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.515" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-PY-252.26199.168" />
+        <option value="bundled-python-sdk-b3d66beaba9a-c6efb3732140-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.26199.168" />
       </set>
     </attachedChunks>
   </component>
@@ -98,9 +103,9 @@
       <updated>1758524558608</updated>
       <workItem from="1758524559804" duration="2836000" />
       <workItem from="1758527460517" duration="1705000" />
-      <workItem from="1759049399457" duration="4582000" />
-      <workItem from="1759068334178" duration="2088000" />
-      <workItem from="1759477808204" duration="4742000" />
+      <workItem from="1759224951913" duration="2559000" />
+      <workItem from="1759297510300" duration="10022000" />
+      <workItem from="1759490109969" duration="980000" />
     </task>
     <task id="LOCAL−00001" summary="Pohjan alku">
       <option name="closed" value="true" />
@@ -200,21 +205,84 @@
       <option name="presentableId" value="LOCAL−00014" />
       <updated>1758705512711</updated>
     </task>
-    <task id="LOCAL−00015" summary="kysymykset sql">
+    <task id="LOCAL−00015" summary="Oljenkorsia hiottu, ei voi valita samaa kahta kertaa">
       <option name="closed" value="true" />
-      <created>1759160910355</created>
+      <created>1759212693442</created>
       <option name="number" value="LOCAL−00015" />
       <option name="presentableId" value="LOCAL−00015" />
-      <updated>1759160910355</updated>
+      <updated>1759212693442</updated>
     </task>
-    <task id="LOCAL−00016" summary="tappelen distancen kanssa, kesken">
+    <task id="LOCAL−00016" summary="Lisätty Eetun lentokenttien välisen etäisyyden kysymys">
       <option name="closed" value="true" />
-      <created>1759248647080</created>
+      <created>1759215277239</created>
       <option name="number" value="LOCAL−00016" />
       <option name="presentableId" value="LOCAL−00016" />
-      <updated>1759248647080</updated>
+      <updated>1759215277239</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL−00017" summary="Bugfixejä">
+      <option name="closed" value="true" />
+      <created>1759216610066</created>
+      <option name="number" value="LOCAL−00017" />
+      <option name="presentableId" value="LOCAL−00017" />
+      <updated>1759216610066</updated>
+    </task>
+    <task id="LOCAL−00018" summary="Uusi funktio joka printtaa vastauslistan kutsuttaessa">
+      <option name="closed" value="true" />
+      <created>1759226703867</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1759226703867</updated>
+    </task>
+    <task id="LOCAL−00019" summary="Muokattu kysymysten vaikeusasteita, lisätty rahabonus jos oljenkorsia käyttämättä">
+      <option name="closed" value="true" />
+      <created>1759300785408</created>
+      <option name="number" value="LOCAL−00019" />
+      <option name="presentableId" value="LOCAL−00019" />
+      <updated>1759300785408</updated>
+    </task>
+    <task id="LOCAL−00020" summary="Lyhennetty vastauksen tarkastusta, poistettu +30 riviä toistuvaa koodia">
+      <option name="closed" value="true" />
+      <created>1759301520623</created>
+      <option name="number" value="LOCAL−00020" />
+      <option name="presentableId" value="LOCAL−00020" />
+      <updated>1759301520623</updated>
+    </task>
+    <task id="LOCAL−00021" summary="Kommentointia">
+      <option name="closed" value="true" />
+      <created>1759301826453</created>
+      <option name="number" value="LOCAL−00021" />
+      <option name="presentableId" value="LOCAL−00021" />
+      <updated>1759301826453</updated>
+    </task>
+    <task id="LOCAL−00022" summary="Error handlereiden selvittämistä">
+      <option name="closed" value="true" />
+      <created>1759302393400</created>
+      <option name="number" value="LOCAL−00022" />
+      <option name="presentableId" value="LOCAL−00022" />
+      <updated>1759302393400</updated>
+    </task>
+    <task id="LOCAL−00023" summary="Kommentointia">
+      <option name="closed" value="true" />
+      <created>1759302852361</created>
+      <option name="number" value="LOCAL−00023" />
+      <option name="presentableId" value="LOCAL−00023" />
+      <updated>1759302852361</updated>
+    </task>
+    <task id="LOCAL−00024" summary="Kommentointia">
+      <option name="closed" value="true" />
+      <created>1759304647744</created>
+      <option name="number" value="LOCAL−00024" />
+      <option name="presentableId" value="LOCAL−00024" />
+      <updated>1759304647744</updated>
+    </task>
+    <task id="LOCAL−00025" summary="Koodin siistimistä">
+      <option name="closed" value="true" />
+      <created>1759305448899</created>
+      <option name="number" value="LOCAL−00025" />
+      <option name="presentableId" value="LOCAL−00025" />
+      <updated>1759305448899</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,18 +303,23 @@
     <MESSAGE value="Pohjan alku" />
     <MESSAGE value="Lisätty pelin alkuvalikko" />
     <MESSAGE value="Lisätty highscore taulu" />
-    <MESSAGE value="Bugfixejä" />
     <MESSAGE value="Lisätty scoreinsert -funktio joka lisää pelaajan nimen ja pisteet tietokantaan pelin jälkeen" />
     <MESSAGE value="Kommentteja lisätty" />
     <MESSAGE value="jatkettu kysymysfunktiota" />
     <MESSAGE value="kysymysfunktion palautus nyt toimiva" />
     <MESSAGE value="kommentteja lisätty" />
-    <MESSAGE value="tappelen distancen kanssa, kesken" />
-    <option name="LAST_COMMIT_MESSAGE" value="tappelen distancen kanssa, kesken" />
+    <MESSAGE value="Oljenkorsia hiottu, ei voi valita samaa kahta kertaa" />
+    <MESSAGE value="Lisätty Eetun lentokenttien välisen etäisyyden kysymys" />
+    <MESSAGE value="Bugfixejä" />
+    <MESSAGE value="Uusi funktio joka printtaa vastauslistan kutsuttaessa" />
+    <MESSAGE value="Muokattu kysymysten vaikeusasteita, lisätty rahabonus jos oljenkorsia käyttämättä" />
+    <MESSAGE value="Lyhennetty vastauksen tarkastusta, poistettu +30 riviä toistuvaa koodia" />
+    <MESSAGE value="Error handlereiden selvittämistä" />
+    <MESSAGE value="Kommentointia" />
+    <MESSAGE value="Koodin siistimistä" />
+    <option name="LAST_COMMIT_MESSAGE" value="Koodin siistimistä" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tietovisa_peli_2$main.coverage" NAME="main Coverage Results" MODIFIED="1759478108038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/tietovisa_peli_2$kysymykset.coverage" NAME="kysymykset Coverage Results" MODIFIED="1759482599206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/tietovisa_peli$main.coverage" NAME="main Coverage Results" MODIFIED="1759127993153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/tietovisa_peli$main.coverage" NAME="main Coverage Results" MODIFIED="1759490712190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
