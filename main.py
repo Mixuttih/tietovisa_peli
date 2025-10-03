@@ -779,7 +779,7 @@ def game():
         print("GAME OVER!")
         # Lisätään highscore tiedot tietokantaan
         scoreinsert(username, money)
-        return username, money
+        return game_over
 
     #Jos pelaaja voittaa, palataan pois funktiosta
     print(f"Your winnings are {money}€")
@@ -797,15 +797,16 @@ def game():
     print("CONGRATULATIONS! YOU ARE A MASTER AIRPORT KNOWER!")
     # Lisätään highscore tiedot tietokantaan
     scoreinsert(username, money)
-    return username, money
+    return game_over
 
 #Aloitetaan peli-funktio
-game()
+game_over = game()
 
-#Kysytään haluaako pelaaja käynnistää pelin uudelleen
-restart = input('Do you want to try again? (y/n): ').upper()
-if restart == 'Y':
-    game()
-elif restart == 'N':
-    exit()
+while game_over == True:
+    #Kysytään haluaako pelaaja käynnistää pelin uudelleen
+    restart = input('Do you want to try again? (y/n): ').upper()
+    if restart == 'Y':
+        game()
+    elif restart == 'N':
+        exit()
 
