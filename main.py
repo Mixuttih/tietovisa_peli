@@ -781,24 +781,6 @@ def game():
         scoreinsert(username, money)
         return game_over
 
-    #Jos pelaaja voittaa, palataan pois funktiosta
-    print(f"Your winnings are {money}€")
-    # Jäljellä olevien oljenkorsien antama bonus
-    lifeline_bonus = 0
-    if olki1 == False:
-        lifeline_bonus += current_round * 100
-    if olki2 == False:
-        lifeline_bonus += current_round * 100
-    if olki3 == False:
-        lifeline_bonus += current_round * 100
-    print(f"Un-used Lifeline Bonus: {lifeline_bonus}€")
-    money += lifeline_bonus
-    print(f"Your total winnings are {money}€")
-    print("CONGRATULATIONS! YOU ARE A MASTER AIRPORT KNOWER!")
-    # Lisätään highscore tiedot tietokantaan
-    scoreinsert(username, money)
-    return game_over
-
 #Aloitetaan peli-funktio
 game_over = game()
 
