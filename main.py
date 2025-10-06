@@ -6,10 +6,10 @@ from geopy import distance
 #SQL yhteys
 yhteys = mysql.connector.connect(
     host='localhost',
-    port=3307,
+    port=3307, #3306 jos sinne asennettu MySQL
     database='flight_game',
     user='root',
-    password='mikasana',
+    password='mikasana', #KÄYTTÄJÄN SALASANA
     autocommit=True
 )
 
@@ -661,7 +661,7 @@ def game():
                     #Nykyinen palkintomäärä
                     print(f"You have earned {money}€")
                     #DEV CHEATS
-                    print(kysymys_sanakirja)
+                    #print(kysymys_sanakirja)
 
                     #Printataan kysymys ja vastaukset
                     vastausvalikko(kysymys_sanakirja)
