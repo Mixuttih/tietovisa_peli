@@ -116,8 +116,6 @@ def kysymysfunktio(i):
             start = [kysymys[0][2], kysymys[0][3]]
             end = [kysymys[1][2], kysymys[1][3]]
 
-            print(start)
-            print(end)
             # Oikea vastaus palautetaan kokonaislukuna
             oikea_vastaus = [int(distance.distance((start[0], start[1]), (end[0], end[1])).km)]
 
@@ -266,8 +264,6 @@ def kysymysfunktio(i):
             start = [kysymys[0][2], kysymys[0][3]]
             end = [kysymys[1][2], kysymys[1][3]]
 
-            print(start)
-            print(end)
             #Oikea vastaus palautetaan kokonaislukuna
             oikea_vastaus = [int(distance.distance((start[0], start[1]), (end[0], end[1])).km)]
 
@@ -279,7 +275,6 @@ def kysymysfunktio(i):
             vastauslista[f"vastaus{random_lista[1]}"] = vaarat_vastaukset[0], 0
             vastauslista[f"vastaus{random_lista[2]}"] = vaarat_vastaukset[1], 0
             vastauslista[f"vastaus{random_lista[3]}"] = vaarat_vastaukset[2], 0
-
 
     #Jos kierrosnumero on alle 16, valitaan kysymys vaikeista kysymyksistä
     elif i < 16:
@@ -418,8 +413,6 @@ def kysymysfunktio(i):
             start = [kysymys[0][2], kysymys[0][3]]
             end = [kysymys[1][2], kysymys[1][3]]
 
-            print(start)
-            print(end)
             #Oikea vastaus palautetaan kokonaislukuna
             oikea_vastaus = [int(distance.distance((start[0], start[1]), (end[0], end[1])).km)]
 
